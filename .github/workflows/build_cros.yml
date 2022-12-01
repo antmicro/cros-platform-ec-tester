@@ -37,4 +37,5 @@ jobs:
 
       - name: Build platform
         run: |
+          cd chromiumos
           cros_sdk -- bash -c "cd ../platform/ec; make BOARD=bloonchipper -j"
