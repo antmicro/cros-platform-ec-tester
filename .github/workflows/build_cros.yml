@@ -35,6 +35,11 @@ jobs:
           repo init -u https://chromium.googlesource.com/chromiumos/manifest -b main
           repo sync -j4
 
+      - name: Install tools
+        run: |
+          setup_board --board hatch
+          build_packages --board hatch chromeos-ec
+
       - name: Build platform
         run: |
           cd chromiumos
