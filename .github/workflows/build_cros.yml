@@ -1,0 +1,29 @@
+name: Build Platform EC
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  simple-test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install prerequisites
+        run: |
+           sudo apt -y update && sudo apt -y install git curl xz-utils python3-pkg-resources python3-virtualenv python3-oauth2client
+           git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+           echo "${PWD}/depot_tools" >> $GITHUB_PATH
+           git config --global user.name "John Doe"
+           git config --global user.email "jdoe@email.com"
+           git config --global core.autocrlf false
+           git config --global core.filemode false
+
+      - name: Download chromiumos
+        run: |
+          mkdir -p ~/chromiumos
+          cd ~/chromiumos
+          repo init -u https://chromium.googlesource.com/chromiumos/manifest -b main
+          repo sync -j4
+      - name: Build platform
+        run: |
+          cros_sdk -- bash -c "cd ../platform/ec; make BOARD=bloonchipper -j"
