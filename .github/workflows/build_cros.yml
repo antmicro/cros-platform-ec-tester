@@ -3,10 +3,20 @@ name: Build Platform EC
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  simple-test:
+  build:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 512
+          swap-size-mb: 1024
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Install prerequisites
         run: |
@@ -24,6 +34,7 @@ jobs:
           cd ~/chromiumos
           repo init -u https://chromium.googlesource.com/chromiumos/manifest -b main
           repo sync -j4
+
       - name: Build platform
         run: |
           cros_sdk -- bash -c "cd ../platform/ec; make BOARD=bloonchipper -j"
