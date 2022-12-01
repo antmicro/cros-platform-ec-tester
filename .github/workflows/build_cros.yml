@@ -30,8 +30,8 @@ jobs:
 
       - name: Download chromiumos
         run: |
-          mkdir -p ~/chromiumos
-          cd ~/chromiumos
+          mkdir -p chromiumos
+          cd chromiumos
           repo init -u https://chromium.googlesource.com/chromiumos/manifest -b main
           repo sync -j4
 
