@@ -1,0 +1,34 @@
+using sysbus
+$name?="nucleo_h743zi"
+mach create $name
+
+machine LoadPlatformDescription @platforms/cpus/stm32h743.repl
+
+# From CONFIG_UART_CONSOLE
+showAnalyzer usart1
+
+logFile $ORIGIN/dartmonkey.log
+cpu LogFunctionNames true true
+sysbus LogAllPeripheralsAccess true
+
+sysbus LoadELF $ORIGIN/dartmonkey.ec.RO.elf
+
+# Let's return 0 from 'crec_flash_pre_init' straight away.
+#
+# Must be added before loading RW.elf because both ELFs contain the symbol.
+cpu AddHook `sysbus GetSymbolAddress "crec_flash_pre_init"`
+"""
+value = 0
+cpu.SetRegisterUnsafe(0, Antmicro.Renode.Peripherals.CPU.RegisterValue.Create(value, 32))
+
+cpu.PC = cpu.LR
+"""
+
+macro reset
+"""
+    sysbus LoadELF $ORIGIN/dartmonkey.ec.RW.elf
+    sysbus LoadELF $ORIGIN/dartmonkey.ec.RO.elf
+    cpu PC 0x80002ed
+"""
+
+runMacro $reset

@@ -1,0 +1,34 @@
+using sysbus
+$name?="nucleo_f412zg"
+mach create $name
+
+machine LoadPlatformDescription $ORIGIN/nucleo_f412zg-hello_world.repl
+
+# From CONFIG_UART_CONSOLE
+showAnalyzer usart2
+
+logFile $ORIGIN/bloonchipper.log
+logLevel -1 flashController
+cpu0 LogFunctionNames true true
+
+sysbus LoadELF $ORIGIN/bloonchipper.ec.RO.elf
+
+# Let's return 1 from 'crec_flash_physical_restore_state' straight away.
+#
+# Must be added before loading RW.elf because both ELFs contain the symbol.
+cpu0 AddHook `sysbus GetSymbolAddress "crec_flash_physical_restore_state"`
+"""
+value = 1
+cpu.SetRegisterUnsafe(0, Antmicro.Renode.Peripherals.CPU.RegisterValue.Create(value, 32))
+
+cpu.PC = cpu.LR
+"""
+
+macro reset
+"""
+    sysbus LoadELF $ORIGIN/bloonchipper.ec.RW.elf
+    sysbus LoadELF $ORIGIN/bloonchipper.ec.RO.elf
+    cpu0 PC 0x8000219
+"""
+
+runMacro $reset
