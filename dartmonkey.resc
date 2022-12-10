@@ -26,8 +26,9 @@ cpu.PC = cpu.LR
 
 macro reset
 """
-    sysbus LoadELF $ORIGIN/dartmonkey.ec.RW.elf
-    sysbus LoadELF $ORIGIN/dartmonkey.ec.RO.elf
+    sysbus LoadBinary $ORIGIN/dartmonkey.ec.bin 0x08000000
+    sysbus LoadSymbolsFrom $ORIGIN/dartmonkey.ec.RW.elf
+    sysbus LoadSymbolsFrom $ORIGIN/dartmonkey.ec.RO.elf
     cpu PC 0x80002ed
 """
 
