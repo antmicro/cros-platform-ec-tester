@@ -12,6 +12,11 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v3
 
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
       - name: Configure git
         run: |
           git config --global user.name "Antmicro"
@@ -25,10 +30,10 @@ jobs:
         uses: antmicro/renode-test-action@v3.0.0
         with:
             renode-version: 'latest'
-            tests-to-run: '-f tests.yml'
+            tests-to-run: '-t tests.yml'
 
       - name: Archive tests results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
             name: test-results
             path: |
