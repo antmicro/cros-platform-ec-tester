@@ -6,7 +6,7 @@ Test Teardown                 Test Teardown
 Resource                      ${RENODEKEYWORDS}
 
 *** Variables ***
-${PLATFORM}                   dartmonkey
+${PLATFORM}                   bloonchipper
 ${SCRIPT}                     ${CURDIR}/${PLATFORM}.resc
 ${BIN_PATH}                   ${CURDIR}/${PLATFORM}
 ${TESTS_PATH}                 ${BIN_PATH}/tests
@@ -25,8 +25,8 @@ Create Machine
     Execute Command           $elf_ro=@${TESTS_PATH}/${test}.RO.elf
     Execute Command           $elf_rw=@${TESTS_PATH}/${test}.RW.elf
     Execute Script            ${SCRIPT}
-    Execute Command           logFile $ORIGIN/logs/dartmonkey-${test}.log
-    Create Terminal Tester    sysbus.usart1  timeout=8
+    Execute Command           logFile $ORIGIN/logs/bloonchipper-${test}.log
+    Create Terminal Tester    sysbus.usart2  timeout=15
 
 
 Run Test
@@ -56,6 +56,10 @@ Should Run test-compile_time_macros.bin
 
 Should Run test-queue.bin
     Run Test                  test-queue.bin
+
+
+Should Run test-stm32f_rtc.bin
+    Run Test                  test-stm32f_rtc.bin
 
 
 Should Run test-fpsensor.bin
