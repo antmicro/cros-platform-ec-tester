@@ -1,18 +1,17 @@
 using sysbus
-$name?="nucleo_h743zi"
+$name?="dartmonkey"
 mach create $name
 
 machine LoadPlatformDescription $ORIGIN/stm32h743.repl
 
-$bin?=@dartmonkey/tests/test-scratchpad.bin
-$elf_ro?=@dartmonkey/tests/scratchpad.RO.elf
-$elf_rw?=@dartmonkey/tests/scratchpad.RW.elf
+$bin?=$ORIGIN/dartmonkey/tests/test-scratchpad.bin
+$elf_ro?=$ORIGIN/dartmonkey/tests/scratchpad.RO.elf
+$elf_rw?=$ORIGIN/dartmonkey/tests/scratchpad.RW.elf
 
 $bin?=$ORIGIN/dartmonkey/ec.bin
 $elf_ro?=$ORIGIN/dartmonkey/ec.RO.elf
 $elf_rw?=$ORIGIN/dartmonkey/ec.RW.elf
 
-# From CONFIG_UART_CONSOLE
 showAnalyzer usart1
 
 #cpu LogFunctionNames true true
