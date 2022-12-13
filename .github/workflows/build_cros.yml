@@ -37,8 +37,8 @@ jobs:
 
       - name: Install tools
         run: |
-          setup_board --board hatch
-          build_packages --board hatch chromeos-ec
+          cros_sdk -- setup_board --board hatch
+          cros_sdk -- build_packages --board hatch chromeos-ec
 
       - name: Build platform
         run: |
