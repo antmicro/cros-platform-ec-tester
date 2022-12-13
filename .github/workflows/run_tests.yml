@@ -1,0 +1,38 @@
+name: EC platform tests
+on:
+  push:
+  schedule:
+    - cron: '0 23 * * *' # run daily at 23:00 (UTC)
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+
+      - name: Configure git
+        run: |
+          git config --global user.name "Antmicro"
+          git config --global user.email "contact@antmicro.com"
+
+      - name: Regenerate test list
+        run: |
+          ./generate_tests.py
+
+      - name: Run tests
+        uses: antmicro/renode-test-action@v3.0.0
+        with:
+            renode-version: 'latest'
+            tests-to-run: '-f tests.yml'
+
+      - name: Archive tests results
+        uses: actions/upload-artifact@v2
+        with:
+            name: test-results
+            path: |
+                report.html
+                log.html
+                robot_output.xml
+
