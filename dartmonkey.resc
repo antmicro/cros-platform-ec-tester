@@ -2,25 +2,22 @@ using sysbus
 $name?="nucleo_h743zi"
 mach create $name
 
-machine LoadPlatformDescription @platforms/cpus/stm32h743.repl
+machine LoadPlatformDescription $ORIGIN/stm32h743.repl
 
-$bin?=@dartmonkey/tests/test-aes.bin
-$elf_ro?=@dartmonkey/tests/aes.RO.elf
-$elf_rw?=@dartmonkey/tests/aes.RW.elf
+$bin?=@dartmonkey/tests/test-scratchpad.bin
+$elf_ro?=@dartmonkey/tests/scratchpad.RO.elf
+$elf_rw?=@dartmonkey/tests/scratchpad.RW.elf
 
-$bin?=@dartmonkey/ec.bin
-$elf_ro?=@dartmonkey/ec.RO.elf
-$elf_rw?=@dartmonkey/ec.RW.elf
+$bin?=$ORIGIN/dartmonkey/ec.bin
+$elf_ro?=$ORIGIN/dartmonkey/ec.RO.elf
+$elf_rw?=$ORIGIN/dartmonkey/ec.RW.elf
 
 # From CONFIG_UART_CONSOLE
 showAnalyzer usart1
 
-logFile $ORIGIN/dartmonkey.log
 #cpu LogFunctionNames true true
 #sysbus LogAllPeripheralsAccess true
 
-#sysbus Tag <0x58024818, 0x5802481b> "pwr" 0xffffffff
-#sysbus Tag <0x52002000, 0x52002000> "flash" 0xffffffff
 # Let's return 0 from 'crec_flash_pre_init' straight away.
 #
 # Must be added before loading RW.elf because both ELFs contain the symbol.
