@@ -1,5 +1,5 @@
 *** Settings ***
-Suite Setup                   Get Test Cases
+Suite Setup                   Setup
 Suite Teardown                Teardown
 Test Setup                    Reset Emulation
 Test Teardown                 Test Teardown
@@ -13,12 +13,6 @@ ${TESTS_PATH}                 ${BIN_PATH}/tests
 @{pattern}                    test-*.bin
 
 *** Keywords ***
-Get Test Cases
-    Setup
-    @{tests}=                 List Files In Directory  ${TESTS_PATH}  @{pattern}
-    Set Suite Variable        @{tests}
-
-
 Create Machine
     [Arguments]               ${test}
     Execute Command           $bin=@${TESTS_PATH}/test-${test}.bin
