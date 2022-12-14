@@ -4,18 +4,23 @@ mach create $name
 
 machine LoadPlatformDescription $ORIGIN/stm32h743.repl
 
-$bin?=$ORIGIN/dartmonkey/tests/test-scratchpad.bin
-$elf_ro?=$ORIGIN/dartmonkey/tests/scratchpad.RO.elf
-$elf_rw?=$ORIGIN/dartmonkey/tests/scratchpad.RW.elf
+
+#$bin?=$ORIGIN/dartmonkey/tests/test-scratchpad.bin
+#$elf_ro?=$ORIGIN/dartmonkey/tests/scratchpad.RO.elf
+#$elf_rw?=$ORIGIN/dartmonkey/tests/scratchpad.RW.elf
 
 $bin?=$ORIGIN/dartmonkey/ec.bin
 $elf_ro?=$ORIGIN/dartmonkey/ec.RO.elf
 $elf_rw?=$ORIGIN/dartmonkey/ec.RW.elf
 
+
 showAnalyzer usart1
 
+
+# Uncomment the lines below for additional logging
 #cpu LogFunctionNames true true
 #sysbus LogAllPeripheralsAccess true
+
 
 # Let's return 0 from 'crec_flash_pre_init' straight away.
 #
