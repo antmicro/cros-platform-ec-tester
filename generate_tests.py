@@ -23,6 +23,10 @@ def generate_tests(board, uart, timeout):
                 test = test_template.replace("%TEST%", entry.name)
                 target_file.write(test)
 
+        with open(board + "-custom.robot", "r") as custom_tests:
+            text = custom_tests.read()
+
+        target_file.write(text)
 
 
 
