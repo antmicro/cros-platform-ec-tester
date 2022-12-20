@@ -10,6 +10,7 @@ ${PLATFORM}                   bloonchipper
 ${SCRIPT}                     ${CURDIR}/${PLATFORM}.resc
 ${BIN_PATH}                   ${CURDIR}/${PLATFORM}
 ${TESTS_PATH}                 ${BIN_PATH}/tests
+${TIMEOUT}                    5
 @{pattern}                    test-*.bin
 
 *** Keywords ***
@@ -20,10 +21,10 @@ Create Machine
     Execute Command           $elf_rw=@${TESTS_PATH}/${test}.RW.elf
     Execute Script            ${SCRIPT}
     Execute Command           logFile $ORIGIN/logs/bloonchipper-${test}.log
-    Create Terminal Tester    sysbus.usart2  timeout=15
+    Create Terminal Tester    sysbus.usart2  timeout=${TIMEOUT}
 
 
-Run Test
+Start To Prompt
     [Arguments]               ${test}
     Reset Emulation
     ${test}=                  Get Substring  ${test}  5  -4
@@ -34,9 +35,12 @@ Run Test
     Wait For Line On Uart     MKBP not cleared within threshold
     Write Line To Uart
     Wait For Prompt On Uart   >
-    Write Line To Uart        runtest
-    Wait For Line On Uart     Pass!
 
+Run Test
+    [Arguments]               ${test}   ${argument}=${EMPTY}
+    Start To Prompt           ${test}
+    Write Line To Uart        runtest ${argument}
+    Wait For Line On Uart     Pass!
 
 *** Test Cases ***
 
@@ -54,10 +58,6 @@ Should Run test-queue.bin
 
 Should Run test-stm32f_rtc.bin
     Run Test                  test-stm32f_rtc.bin
-
-
-Should Run test-fpsensor.bin
-    Run Test                  test-fpsensor.bin
 
 
 Should Run test-mutex.bin
@@ -96,16 +96,8 @@ Should Run test-panic.bin
     Run Test                  test-panic.bin
 
 
-Should Run test-ftrapv.bin
-    Run Test                  test-ftrapv.bin
-
-
 Should Run test-sha256_unrolled.bin
     Run Test                  test-sha256_unrolled.bin
-
-
-Should Run test-rollback.bin
-    Run Test                  test-rollback.bin
 
 
 Should Run test-always_memset.bin
@@ -128,20 +120,12 @@ Should Run test-sha256.bin
     Run Test                  test-sha256.bin
 
 
-Should Run test-panic_data.bin
-    Run Test                  test-panic_data.bin
-
-
 Should Run test-pingpong.bin
     Run Test                  test-pingpong.bin
 
 
 Should Run test-printf.bin
     Run Test                  test-printf.bin
-
-
-Should Run test-system_is_locked.bin
-    Run Test                  test-system_is_locked.bin
 
 
 Should Run test-utils_str.bin
@@ -156,16 +140,8 @@ Should Run test-timer_dos.bin
     Run Test                  test-timer_dos.bin
 
 
-Should Run test-rollback_entropy.bin
-    Run Test                  test-rollback_entropy.bin
-
-
 Should Run test-fpsensor_hw.bin
     Run Test                  test-fpsensor_hw.bin
-
-
-Should Run test-debug.bin
-    Run Test                  test-debug.bin
 
 
 Should Run test-cec.bin
@@ -183,3 +159,67 @@ Should Run test-rtc.bin
 Should Run test-flash_physical.bin
     Run Test                  test-flash_physical.bin
 
+# Custom tests, with additional run parameters or conditions
+
+Should Run test-fpsensor.bin uart
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Run Test                  test-fpsensor.bin              uart
+
+
+Should Run test-fpsensor.bin spi
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Run Test                  test-fpsensor.bin              spi
+
+
+Should Run test-debug.bin no_debugger
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Run Test                  test-debug.bin                 no_debugger
+
+
+Should Run test-debug.bin debugger
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Run Test                  test-debug.bin                 debugger
+
+
+Should Run test-system_is_locked.bin wp_on
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Run Test                  test-system_is_locked.bin      wp_on
+
+
+Should Run test-system_is_locked.bin wp_off
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Run Test                  test-system_is_locked.bin      wp_off
+
+
+Should Run test-rollback.bin region0
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Run Test                  test-rollback.bin              region0
+
+
+Should Run test-rollback.bin region1
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Run Test                  test-rollback.bin              region1
+
+
+Should Run test-rollback_entropy.bin
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Start To Prompt           test-rollback_entropy.bin
+    Write Line To Uart        reboot ro
+    Wait For Line On Uart     MKBP not cleared within threshold
+    Wait For Line On Uart     MKBP not cleared within threshold
+    Write Line To Uart
+    Wait For Prompt On Uart   >
+    Write Line To Uart        runtest
+    Wait For Line On Uart     Pass!
+
+
+Should Run test-ftrapv.bin
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Set Test Variable         ${TIMEOUT}                     10
+    Run Test                  test-ftrapv.bin
+
+
+Should Run test-panic_data.bin
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Set Test Variable         ${TIMEOUT}                     10
+    Run Test                  test-panic_data.bin
