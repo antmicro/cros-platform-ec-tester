@@ -1,10 +1,3 @@
-*** Settings ***
-Suite Setup                   Setup
-Suite Teardown                Teardown
-Test Setup                    Reset Emulation
-Test Teardown                 Test Teardown
-Resource                      ${RENODEKEYWORDS}
-
 *** Variables ***
 ${PLATFORM}                   %PLATFORM%
 ${SCRIPT}                     ${CURDIR}/${PLATFORM}.resc
@@ -41,5 +34,14 @@ Run Test
     Start To Prompt           ${test}
     Write Line To Uart        runtest ${argument}
     Wait For Line On Uart     Pass!
+
+Start In RO
+    [Arguments]               ${test}
+    Start To Prompt           ${test}
+    Write Line To Uart        reboot ro
+    Wait For Line On Uart     MKBP not cleared within threshold
+    Wait For Line On Uart     MKBP not cleared within threshold
+    Write Line To Uart
+    Wait For Prompt On Uart   >
 
 *** Test Cases ***
