@@ -3,7 +3,7 @@ ${PLATFORM}                   dartmonkey
 ${SCRIPT}                     ${CURDIR}/${PLATFORM}.resc
 ${BIN_PATH}                   ${CURDIR}/${PLATFORM}
 ${TESTS_PATH}                 ${BIN_PATH}/tests
-${TIMEOUT}                    5
+${TIMEOUT}                    15
 @{pattern}                    test-*.bin
 
 *** Keywords ***

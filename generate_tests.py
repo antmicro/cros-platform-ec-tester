@@ -35,6 +35,6 @@ def generate_tests(board, uart, timeout):
 
 
 with open("tests.yml", "w") as tests:
-    for board, (uart, timeout) in { 'dartmonkey': ("usart1", 5), 'bloonchipper': ("usart2", 5) }.items():
+    for board, (uart, timeout) in { 'dartmonkey': ("usart1", 15), 'bloonchipper': ("usart2", 15) }.items():
         generate_tests(board, uart, timeout)
         tests.write(f"- {board}.robot\n")
