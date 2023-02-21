@@ -16,9 +16,9 @@ sdramBank1: Memory.MappedMemory @ sysbus 0xC0000000
 //eeprom: Memory.MappedMemory @ sysbus 0x08080000
 //    size: 0x1800
 
-flashController: MTD.STM32L0_FlashController @ sysbus 0x52002000
-    flash: flash1
-    eeprom: empty
+flashController: MTD.STM32H7_FlashController @ sysbus 0x52002000
+    flash1: flash0
+    flash2: flash1
 
 flash0: Memory.MappedMemory @ sysbus 0x80000000
     size: 0x10000000
@@ -59,6 +59,10 @@ gpioPortC: GPIOPort.STM32_GPIOPort @ sysbus <0x58020800, +0x400>
 gpioPortB: GPIOPort.STM32_GPIOPort @ sysbus <0x58020400, +0x400>
 
 gpioPortA: GPIOPort.STM32_GPIOPort @ sysbus <0x58020000, +0x400>
+
+GPIO_WP: Miscellaneous.Button @ gpioPortB 7
+    invert: true
+    -> gpioPortB@7
 
 rtc: Timers.STM32F4_RTC @ sysbus 0x58004000
 

@@ -22,22 +22,10 @@ showAnalyzer usart1
 #sysbus LogAllPeripheralsAccess true
 
 
-# Let's return 0 from 'crec_flash_pre_init' straight away.
-#
-# Must be added before loading RW.elf because both ELFs contain the symbol.
-set hook
-"""
-value = 0
-cpu.SetRegisterUnsafe(0, Antmicro.Renode.Peripherals.CPU.RegisterValue.Create(value, 32))
-
-cpu.PC = cpu.LR
-"""
-
 macro reset
 """
     sysbus LoadBinary $bin 0x08000000
     sysbus LoadSymbolsFrom $elf_ro
-    cpu AddHook `sysbus GetSymbolAddress "crec_flash_pre_init"` $hook
     sysbus LoadSymbolsFrom $elf_rw
     cpu PC 0x80002ed
 """
