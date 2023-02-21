@@ -18,10 +18,14 @@ def generate_tests(board, uart, timeout):
     with open(board + ".robot", "w") as target_file:
         target_file.write(text)
 
+        tests = []
         for entry in os.scandir(board + "/tests"):
             if entry.is_file() and entry.name.startswith(test_prefix):
-                test = test_template.replace("%TEST%", entry.name)
-                target_file.write(test)
+                tests.append((entry.name, test_template.replace("%TEST%", entry.name)))
+
+        tests.sort(key=lambda x: x[0])
+        for entry in tests:
+            target_file.write(entry[1])
 
         with open(board + "-custom.robot", "r") as custom_tests:
             text = custom_tests.read()
