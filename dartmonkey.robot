@@ -78,10 +78,6 @@ Should Run test-flash_physical.bin
     Run Test                  test-flash_physical.bin
 
 
-Should Run test-flash_write_protect.bin
-    Run Test                  test-flash_write_protect.bin
-
-
 Should Run test-fpsensor_hw.bin
     Run Test                  test-fpsensor_hw.bin
 
@@ -194,7 +190,32 @@ Should Run test-system_is_locked.bin wp_on
 
 Should Run test-system_is_locked.bin wp_off
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
-    Run Test                  test-system_is_locked.bin      wp_off
+    Create Machine            system_is_locked
+    ${RESET_MACRO}=  Catenate  SEPARATOR=\n
+    ...  """
+    ...  sysbus LoadBinary $bin 0x08000000
+    ...  sysbus LoadSymbolsFrom $elf_ro
+    ...  sysbus LoadSymbolsFrom $elf_rw
+    ...  gpioPortB.GPIO_WP Press
+    ...  cpu PC 0x80002ed
+    ...  """
+    Execute Command           macro reset${\n}${RESET_MACRO}
+    Execute Command           machine Reset
+    Start Emulation
+    Wait For Line On Uart     Image: RW
+    Wait For Line On Uart     MKBP not cleared within threshold
+    Wait For Line On Uart     MKBP not cleared within threshold
+    Write Line To Uart
+    Wait For Prompt On Uart   >
+    Write Line To Uart        runtest wp_off
+    Wait For Line On Uart     Pass!
+
+
+Should Run test-flash_write_protect.bin
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Start In RO               test-flash_write_protect.bin
+    Write Line To Uart        runtest
+    Wait For Line On Uart     Pass!
 
 
 Should Run test-rollback.bin region0
