@@ -44,4 +44,10 @@ Start In RO
     Write Line To Uart
     Wait For Prompt On Uart   >
 
+Expect MPU failure
+    [Arguments]               ${test}   ${argument}=${EMPTY}
+    Start To Prompt           ${test}
+    Write Line To Uart        runtest ${argument}
+    Wait For Line On Uart     Data access violation, mfar =
+
 *** Test Cases ***

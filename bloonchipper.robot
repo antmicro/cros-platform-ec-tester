@@ -44,6 +44,12 @@ Start In RO
     Write Line To Uart
     Wait For Prompt On Uart   >
 
+Expect MPU failure
+    [Arguments]               ${test}   ${argument}=${EMPTY}
+    Start To Prompt           ${test}
+    Write Line To Uart        runtest ${argument}
+    Wait For Line On Uart     Data access violation, mfar =
+
 *** Test Cases ***
 
 Should Run test-abort.bin
@@ -225,12 +231,12 @@ Should Run test-system_is_locked.bin wp_off
 
 Should Run test-rollback.bin region0
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
-    Run Test                  test-rollback.bin              region0
+    Expect MPU failure        test-rollback.bin              region0
 
 
 Should Run test-rollback.bin region1
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
-    Run Test                  test-rollback.bin              region1
+    Expect MPU failure        test-rollback.bin              region1
 
 
 Should Run test-rollback_entropy.bin
