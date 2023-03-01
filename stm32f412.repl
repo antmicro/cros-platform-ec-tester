@@ -38,6 +38,10 @@ gpiog: GPIOPort.STM32_GPIOPort @ sysbus <0x40021800, +0x400>
 
 gpioh: GPIOPort.STM32_GPIOPort @ sysbus <0x40021C00, +0x400>
 
+GPIO_WP: Miscellaneous.Button @ gpiob 7
+    invert: true
+    -> gpiob@7
+
 rcc: Miscellaneous.STM32F4_RCC @ sysbus 0x40023800
     rtcPeripheral: rtc
 
