@@ -50,6 +50,10 @@ Should Run test-abort.bin
     Run Test                  test-abort.bin
 
 
+Should Run test-aes.bin
+    Run Test                  test-aes.bin
+
+
 Should Run test-always_memset.bin
     Run Test                  test-always_memset.bin
 
@@ -116,6 +120,10 @@ Should Run test-printf.bin
 
 Should Run test-queue.bin
     Run Test                  test-queue.bin
+
+
+Should Run test-rng_benchmark.bin
+    Run Test                  test-rng_benchmark.bin
 
 
 Should Run test-rsa3.bin
