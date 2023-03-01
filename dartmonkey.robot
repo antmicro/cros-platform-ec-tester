@@ -241,3 +241,11 @@ Should Run test-rollback_entropy.bin
     Start In RO               test-rollback_entropy.bin
     Write Line To Uart        runtest
     Wait For Line On Uart     Pass!
+
+Should Run test-benchmark.bin
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Start To Prompt           test-benchmark.bin
+    # Reduce quantum value as this test requires more precision
+    Execute Command           emulation SetGlobalQuantum "0.000005"
+    Write Line To Uart        runtest
+    Wait For Line On Uart     Pass!
