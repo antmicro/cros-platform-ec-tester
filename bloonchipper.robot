@@ -86,6 +86,10 @@ Should Run test-fpsensor_hw.bin
     Run Test                  test-fpsensor_hw.bin
 
 
+Should Run test-ftrapv.bin
+    Run Test                  test-ftrapv.bin
+
+
 Should Run test-libc_printf.bin
     Run Test                  test-libc_printf.bin
 
@@ -100,6 +104,10 @@ Should Run test-mutex.bin
 
 Should Run test-panic.bin
     Run Test                  test-panic.bin
+
+
+Should Run test-panic_data.bin
+    Run Test                  test-panic_data.bin
 
 
 Should Run test-pingpong.bin
@@ -226,15 +234,3 @@ Should Run test-rollback_entropy.bin
     Start In RO               test-rollback_entropy.bin
     Write Line To Uart        runtest
     Wait For Line On Uart     Pass!
-
-
-Should Run test-ftrapv.bin
-    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
-    Set Test Variable         ${TIMEOUT}                     10
-    Run Test                  test-ftrapv.bin
-
-
-Should Run test-panic_data.bin
-    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
-    Set Test Variable         ${TIMEOUT}                     10
-    Run Test                  test-panic_data.bin

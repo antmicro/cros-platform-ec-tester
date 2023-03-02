@@ -63,15 +63,3 @@ Should Run test-rollback_entropy.bin
     Start In RO               test-rollback_entropy.bin
     Write Line To Uart        runtest
     Wait For Line On Uart     Pass!
-
-
-Should Run test-ftrapv.bin
-    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
-    Set Test Variable         ${TIMEOUT}                     10
-    Run Test                  test-ftrapv.bin
-
-
-Should Run test-panic_data.bin
-    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
-    Set Test Variable         ${TIMEOUT}                     10
-    Run Test                  test-panic_data.bin
