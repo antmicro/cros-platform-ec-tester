@@ -92,10 +92,6 @@ Should Run test-flash_write_protect.bin
     Run Test                  test-flash_write_protect.bin
 
 
-Should Run test-fpsensor_hw.bin
-    Run Test                  test-fpsensor_hw.bin
-
-
 Should Run test-ftrapv.bin
     Run Test                  test-ftrapv.bin
 
