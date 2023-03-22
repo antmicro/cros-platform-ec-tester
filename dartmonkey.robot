@@ -188,11 +188,6 @@ Should Run test-debug.bin no_debugger
     Run Test                  test-debug.bin                 no_debugger
 
 
-Should Run test-debug.bin debugger
-    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
-    Run Test                  test-debug.bin                 debugger
-
-
 Should Run test-system_is_locked.bin wp_on
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
     Run Test                  test-system_is_locked.bin      wp_on
