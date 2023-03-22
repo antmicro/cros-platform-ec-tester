@@ -50,6 +50,9 @@ rtc: Timers.STM32F4_RTC @ sysbus 0x40002800
     wakeupTimerFrequency: 32000
     AlarmIRQ->nvic@41
 
+rng: Miscellaneous.STM32F4_RNG @ sysbus 0x50060800
+    -> nvic@80
+
 spi1: SPI.STM32SPI @ sysbus 0x40013000
     ->nvic@35
 
