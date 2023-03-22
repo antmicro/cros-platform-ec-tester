@@ -128,6 +128,10 @@ Should Run test-queue.bin
     Run Test                  test-queue.bin
 
 
+Should Run test-rng_benchmark.bin
+    Run Test                  test-rng_benchmark.bin
+
+
 Should Run test-rsa3.bin
     Run Test                  test-rsa3.bin
 
