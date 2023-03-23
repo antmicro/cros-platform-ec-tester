@@ -88,10 +88,6 @@ Should Run test-flash_physical.bin
     Run Test                  test-flash_physical.bin
 
 
-Should Run test-flash_write_protect.bin
-    Run Test                  test-flash_write_protect.bin
-
-
 Should Run test-ftrapv.bin
     Run Test                  test-ftrapv.bin
 
@@ -253,6 +249,13 @@ Should Run test-rollback.bin region1
 Should Run test-rollback_entropy.bin
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
     Start In RO               test-rollback_entropy.bin
+    Write Line To Uart        runtest
+    Wait For Line On Uart     Pass!
+
+
+Should Run test-flash_write_protect.bin
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Start In RO               test-flash_write_protect.bin
     Write Line To Uart        runtest
     Wait For Line On Uart     Pass!
 

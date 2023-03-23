@@ -60,6 +60,13 @@ Should Run test-rollback_entropy.bin
     Wait For Line On Uart     Pass!
 
 
+Should Run test-flash_write_protect.bin
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Start In RO               test-flash_write_protect.bin
+    Write Line To Uart        runtest
+    Wait For Line On Uart     Pass!
+
+
 Should Run test-benchmark.bin
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
     Start To Prompt           test-benchmark.bin
