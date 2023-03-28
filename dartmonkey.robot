@@ -92,8 +92,16 @@ Should Run test-ftrapv.bin
     Run Test                  test-ftrapv.bin
 
 
+Should Run test-global_initialization.bin
+    Run Test                  test-global_initialization.bin
+
+
 Should Run test-libc_printf.bin
     Run Test                  test-libc_printf.bin
+
+
+Should Run test-libcxx.bin
+    Run Test                  test-libcxx.bin
 
 
 Should Run test-mpu.bin
@@ -160,8 +168,16 @@ Should Run test-stdlib.bin
     Run Test                  test-stdlib.bin
 
 
+Should Run test-timer.bin
+    Run Test                  test-timer.bin
+
+
 Should Run test-timer_dos.bin
     Run Test                  test-timer_dos.bin
+
+
+Should Run test-tpm_seed_clear.bin
+    Run Test                  test-tpm_seed_clear.bin
 
 
 Should Run test-utils.bin
