@@ -217,7 +217,7 @@ Should Run test-system_is_locked.bin wp_off
     Start Emulation
     Wait For Line On Uart     Image: RW
     Wait For Line On Uart     MKBP not cleared within threshold
-    Wait For Line On Uart     MKBP not cleared within threshold
+    Wait For Line On Uart     MKBP: The AP is failing to respond despite being powered on.
     Write Line To Uart
     Wait For Prompt On Uart   >
     Write Line To Uart        runtest wp_off
@@ -245,6 +245,6 @@ Should Run test-benchmark.bin
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
     Start To Prompt           test-benchmark.bin
     # Reduce quantum value as this test requires more precision
-    Execute Command           emulation SetGlobalQuantum "0.000005"
+    Execute Command           emulation SetGlobalQuantum "0.000003"
     Write Line To Uart        runtest
     Wait For Line On Uart     Pass!
