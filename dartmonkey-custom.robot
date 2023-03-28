@@ -36,7 +36,7 @@ Should Run test-system_is_locked.bin wp_off
     Start Emulation
     Wait For Line On Uart     Image: RW
     Wait For Line On Uart     MKBP not cleared within threshold
-    Wait For Line On Uart     MKBP not cleared within threshold
+    Wait For Line On Uart     MKBP: The AP is failing to respond despite being powered on.
     Write Line To Uart
     Wait For Prompt On Uart   >
     Write Line To Uart        runtest wp_off
