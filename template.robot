@@ -25,7 +25,7 @@ Start To Prompt
     Start Emulation
     Wait For Line On Uart     Image: RW
     Wait For Line On Uart     MKBP not cleared within threshold
-    Wait For Line On Uart     MKBP not cleared within threshold
+    Wait For Line On Uart     MKBP: The AP is failing to respond despite being powered on.
     Write Line To Uart
     Wait For Prompt On Uart   >
 
@@ -40,7 +40,7 @@ Start In RO
     Start To Prompt           ${test}
     Write Line To Uart        reboot ro
     Wait For Line On Uart     MKBP not cleared within threshold
-    Wait For Line On Uart     MKBP not cleared within threshold
+    Wait For Line On Uart     MKBP: The AP is failing to respond despite being powered on.
     Write Line To Uart
     Wait For Prompt On Uart   >
 
