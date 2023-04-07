@@ -66,6 +66,9 @@ GPIO_WP: Miscellaneous.Button @ gpioPortB 7
 
 rtc: Timers.STM32F4_RTC @ sysbus 0x58004000
 
+spi4: SPI.STM32H7_SPI @ sysbus 0x40013400
+    DMARecieve -> dma2@4
+
 i2c4: I2C.STM32F7_I2C @ sysbus 0x58001C00
     EventInterrupt -> nvic@95
     ErrorInterrupt -> nvic@96
