@@ -22,6 +22,8 @@ nvic: IRQControllers.NVIC @ sysbus 0xE000E000
 sram0: Memory.MappedMemory @ sysbus 0x20000000
     size: 0x40000
 
+crc: CRC.STM32F4_CRC @ sysbus 0x40023000
+
 gpioa: GPIOPort.STM32_GPIOPort @ sysbus <0x40020000, +0x400>
 
 gpiob: GPIOPort.STM32_GPIOPort @ sysbus <0x40020400, +0x400>
