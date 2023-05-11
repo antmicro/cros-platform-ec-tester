@@ -19,6 +19,24 @@ flashController: MTD.STM32F4_FlashController @ {
 nvic: IRQControllers.NVIC @ sysbus 0xE000E000
     -> cpu@0
 
+exti: IRQControllers.STM32F4_EXTI @ sysbus 0x40013C00
+    numberOfOutputLines: 23
+    [0-4] -> nvic@[6-10]
+    [5-9] -> nvicInput23@[0-4]
+    [10-15] -> nvicInput40@[0-5]
+    [16, 17, 18, 22] -> nvic@[1, 41, 42, 3]
+
+nvicInput23: Miscellaneous.CombinedInput @ none
+    numberOfInputs: 5
+    -> nvic@23
+
+nvicInput40: Miscellaneous.CombinedInput @ none
+    numberOfInputs: 6
+    -> nvic@40
+
+syscfg: Miscellaneous.STM32_SYSCFG @ sysbus 0x40013800
+    [0-15] -> exti@[0-15]
+
 sram0: Memory.MappedMemory @ sysbus 0x20000000
     size: 0x40000
 
@@ -49,7 +67,8 @@ rcc: Miscellaneous.STM32F4_RCC @ sysbus 0x40023800
 
 rtc: Timers.STM32F4_RTC @ sysbus 0x40002800
     wakeupTimerFrequency: 32000
-    AlarmIRQ->nvic@41
+    AlarmIRQ->exti@17
+    WakeupIRQ->exti@22
 
 rng: Miscellaneous.STM32F4_RNG @ sysbus 0x50060800
     -> nvic@80
