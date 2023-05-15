@@ -16,6 +16,11 @@ Create Machine
     Execute Command           logFile $ORIGIN/logs/dartmonkey-${test}.log
     Create Terminal Tester    sysbus.usart1  timeout=${TIMEOUT}
 
+Wait For System Prompt
+    Wait For Line On Uart     MKBP not cleared within threshold
+    Wait For Line On Uart     MKBP: The AP is failing to respond despite being powered on.
+    Write Line To Uart
+    Wait For Prompt On Uart   >
 
 Start To Prompt
     [Arguments]               ${test}
@@ -23,11 +28,7 @@ Start To Prompt
     ${test}=                  Get Substring  ${test}  5  -4
     Create Machine            ${test}
     Start Emulation
-    Wait For Line On Uart     Image: RW
-    Wait For Line On Uart     MKBP not cleared within threshold
-    Wait For Line On Uart     MKBP: The AP is failing to respond despite being powered on.
-    Write Line To Uart
-    Wait For Prompt On Uart   >
+    Wait For System Prompt
 
 Run Test
     [Arguments]               ${test}   ${argument}=${EMPTY}
@@ -39,10 +40,7 @@ Start In RO
     [Arguments]               ${test}
     Start To Prompt           ${test}
     Write Line To Uart        reboot ro
-    Wait For Line On Uart     MKBP not cleared within threshold
-    Wait For Line On Uart     MKBP: The AP is failing to respond despite being powered on.
-    Write Line To Uart
-    Wait For Prompt On Uart   >
+    Wait For System Prompt
 
 Expect MPU failure
     [Arguments]               ${test}   ${argument}=${EMPTY}
@@ -223,11 +221,7 @@ Should Run test-system_is_locked.bin wp_off
     Execute Command           macro reset${\n}${RESET_MACRO}
     Execute Command           machine Reset
     Start Emulation
-    Wait For Line On Uart     Image: RW
-    Wait For Line On Uart     MKBP not cleared within threshold
-    Wait For Line On Uart     MKBP: The AP is failing to respond despite being powered on.
-    Write Line To Uart
-    Wait For Prompt On Uart   >
+    Wait For System Prompt
     Write Line To Uart        runtest wp_off
     Wait For Line On Uart     Pass!
 

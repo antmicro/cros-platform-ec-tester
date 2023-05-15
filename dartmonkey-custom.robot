@@ -34,11 +34,7 @@ Should Run test-system_is_locked.bin wp_off
     Execute Command           macro reset${\n}${RESET_MACRO}
     Execute Command           machine Reset
     Start Emulation
-    Wait For Line On Uart     Image: RW
-    Wait For Line On Uart     MKBP not cleared within threshold
-    Wait For Line On Uart     MKBP: The AP is failing to respond despite being powered on.
-    Write Line To Uart
-    Wait For Prompt On Uart   >
+    Wait For System Prompt
     Write Line To Uart        runtest wp_off
     Wait For Line On Uart     Pass!
 
