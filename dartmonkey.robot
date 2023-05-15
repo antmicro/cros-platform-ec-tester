@@ -256,3 +256,22 @@ Should Run test-benchmark.bin
     Execute Command           emulation SetGlobalQuantum "0.000005"
     Write Line To Uart        runtest
     Wait For Line On Uart     Pass!
+
+Should Run spixfer test
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Create Machine            fpsensor
+    Execute Command           machine LoadPlatformDescriptionFromString 'sensor: Sensors.GenericSPISensor @ spi4'
+    Execute Command           spi4.sensor FeedSample 0xAB
+    Execute Command           spi4.sensor FeedSample 0xAB
+    Execute Command           spi4.sensor FeedSample 0xCD
+    Execute Command           spi4.sensor FeedSample 0xEF
+    Start Emulation
+    Wait For System Prompt
+    Write Line To Uart        spixfer rlen 0 0 3
+    Wait For Line On Uart     Data: abcdef
+    Execute Command           spi4.sensor FeedSample 0xFE
+    Execute Command           spi4.sensor FeedSample 0xFE
+    Execute Command           spi4.sensor FeedSample 0xDC
+    Execute Command           spi4.sensor FeedSample 0xBA
+    Write Line To Uart        spixfer rlen 0 0 3
+    Wait For Line On Uart     Data: fedcba
