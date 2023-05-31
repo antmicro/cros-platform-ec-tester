@@ -240,6 +240,9 @@ itcm: Memory.MappedMemory @ sysbus 0x00000000
 
 rcc: Miscellaneous.STM32H7_RCC @ sysbus 0x58024400
 
+crc: CRC.STM32F0_CRC @ sysbus 0x58024C00
+    configurablePoly: true
+
 lptimer1: Timers.STM32L0_LpTimer @ sysbus 0x40002400
     frequency: 32000000
     -> nvic@93
