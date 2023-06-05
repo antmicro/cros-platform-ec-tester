@@ -70,3 +70,10 @@ Should Run test-benchmark.bin
     Execute Command           emulation SetGlobalQuantum "0.000003"
     Write Line To Uart        runtest
     Wait For Line On Uart     Pass!
+
+
+Should Run test-sbrk.bin
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Start In RO               test-sbrk.bin
+    Write Line To Uart        runtest
+    Wait For Line On Uart     Pass!

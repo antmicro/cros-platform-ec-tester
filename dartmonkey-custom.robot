@@ -103,3 +103,9 @@ Should Run test-fpsensor_hw.bin
     Wait For System Prompt
     Write Line To Uart        runtest
     Wait For Line On Uart     Pass!
+
+Should Run test-sbrk.bin
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Start In RO               test-sbrk.bin
+    Write Line To Uart        runtest
+    Wait For Line On Uart     Pass!
