@@ -2,3 +2,8 @@ logs/
 *.xml
 *.html
 snapshots/
+artifacts/
+*/tests/
+bloonchipper.robot
+dartmonkey.robot
+tests.yml

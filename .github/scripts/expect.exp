@@ -1,0 +1,17 @@
+#!/usr/bin/env -S expect -f
+
+set timeout -1
+set IMG_FILE [lindex $argv 0]
+
+spawn kvm -m 24576 -smp 6 -hda $IMG_FILE -net nic -net user -nographic
+
+expect "debian login: "
+send "root\n"
+
+expect "root@debian:"
+send "./run_admin.sh\n"
+
+expect "Enable color display in this user account (y/N)?"
+send "y\n"
+
+expect eof

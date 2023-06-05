@@ -1,0 +1,21 @@
+dartmonkey:
+  custom:
+    - fpsensor
+    - debug
+    - system_is_locked
+    - flash_write_protect
+    - rollback
+    - rollback_entropy
+    - benchmark
+    - fpsensor_hw
+bloonchipper:
+  custom:
+    - fpsensor
+    - debug
+    - system_is_locked
+    - flash_write_protect
+    - rollback
+    - rollback_entropy
+    - benchmark
+  skip:
+    - fpsensor_hw
