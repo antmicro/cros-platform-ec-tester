@@ -15,7 +15,7 @@ cd ~/chromiumos
 # Get the source
 # repo init cannot be silent as it prompts us for input
 repo init -u https://chromium.googlesource.com/chromiumos/manifest -b main
-repo sync -j4 &> /dev/null
+repo sync -j4
 
 cd ~/chromiumos/src
 
