@@ -17,6 +17,19 @@ Please go to [docs.renode.io](https://docs.renode.io/) for documentation on Reno
 
 ## How to use this repository?
 
+### Preparing the repository
+
+Before using the repository you first have to prepare it by downloading precompiled EC test binaries.
+This repository provides nightly builds of all tests for the `bloonchipper` and `dartmonkey` targets using GitHub Actions.
+
+To download them first navigate to the [Actions](https://github.com/antmicro/cros-platform-ec-tester/actions) tab then click on the top-most run.
+There will be a `Artifacts` box on the bottom of the page, there click on `test-binaries` this will start a download of a zip file with all prebuilt binaries required to run the tests.
+
+The contents of the archive need to be unpacked into a directory called `artifacts` that should be created in the root of the repository.
+
+After those files are in place you need to run a Python script - `generate_tests.py` to generate a `*.robot` file with tests for each platform and `tests.yml`, that can be used to run all tests for all platforms. 
+After running the script test binaries will be copied to appropriate locations and the `artifacts` directory can be removed.
+
 ### Renode-run
 
 The simplest but least flexible way of running these tests requires you to work on Linux and have Python3 and pip installed:
