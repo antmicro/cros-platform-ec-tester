@@ -78,7 +78,7 @@ jobs:
       #     ./generate_tests.py
 
       - name: Run tests
-        uses: antmicro/renode-test-action@v3.0.0
+        uses: antmicro/renode-test-action@main
         with:
           renode-version: 'latest'
           tests-to-run: 'test.robot'
