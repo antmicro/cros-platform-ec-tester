@@ -78,12 +78,13 @@ jobs:
           ./generate_tests.py
 
       - name: Run tests
-        uses: antmicro/renode-test-action@v3.0.0
+        uses: antmicro/renode-test-action@v3.1.0
         with:
           renode-version: 'latest'
           tests-to-run: '-t tests.yml'
 
       - name: Archive tests results
+        if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
           name: test-results
