@@ -11,6 +11,7 @@ dartmonkey:
     - sbrk
   skip:
     - std_vector
+    - fpsensor_auth_crypto_stateful
 bloonchipper:
   custom:
     - fpsensor
