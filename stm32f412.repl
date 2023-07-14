@@ -74,7 +74,7 @@ rng: Miscellaneous.STM32F4_RNG @ sysbus 0x50060800
     -> nvic@80
 
 spi1: SPI.STM32SPI @ sysbus 0x40013000
-    ->nvic@35
+    IRQ->nvic@35
 
 timers2: Timers.STM32_Timer @ sysbus <0x40000000, +0x400>
     frequency: 96000000
