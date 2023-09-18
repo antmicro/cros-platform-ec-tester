@@ -11,7 +11,7 @@ env:
 jobs:
   build:
     container: debian:bullseye
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     env:
       IMG_FILE: debian-11-nocloud-amd64.qcow2
     steps:
@@ -50,7 +50,7 @@ jobs:
 
   test:
     container: debian:bullseye
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
     needs: build
     steps:
       - name: Clone repository
