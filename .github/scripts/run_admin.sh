@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 set -x
 
+export DEBIAN_FRONTEND=noninteractive
+
 apt update && apt upgrade --no-install-recommends -yqq &> /dev/null
-DEBIAN_FRONTEND=noninteractive apt install --no-install-recommends -yqq git curl xz-utils python3-pkg-resources python3-virtualenv python3-oauth2client &> /dev/null
+apt install --no-install-recommends -yqq git curl xz-utils python3-pkg-resources python3-virtualenv python3-oauth2client &> /dev/null
 
 useradd -m runner
 usermod -aG sudo runner
