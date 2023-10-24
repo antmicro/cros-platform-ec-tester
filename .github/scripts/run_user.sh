@@ -25,3 +25,4 @@ cros_sdk -- bash -c "sudo cros_setup_toolchains &> /dev/null" &> /dev/null
 # Build examples
 cros_sdk -- bash -c "cd ../platform/ec; make tests BOARD=dartmonkey -j 4"
 cros_sdk -- bash -c "cd ../platform/ec; make tests BOARD=bloonchipper -j 4"
+cros_sdk -- bash -c "cd ../platform/ec; make tests BOARD=helipilot -j 4"

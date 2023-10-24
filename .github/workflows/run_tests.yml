@@ -36,11 +36,12 @@ jobs:
 
       - name: Extract artifacts
         run: |
-          mkdir -p artifacts-raw artifacts/dartmonkey artifacts/bloonchipper
+          mkdir -p artifacts-raw artifacts/dartmonkey artifacts/bloonchipper artifacts/helipilot
           LIBGUESTFS_BACKEND=direct virt-copy-out -a ${{env.IMG_FILE}} /home/runner/chromiumos/src/platform/ec/build artifacts-raw
           copy_artifacts() { find artifacts-raw/build/$1 \( -iname 'test-*.bin' -o -iname '*.RO.elf' -o -iname '*.RW.elf' \) -exec cp '{}' artifacts/$1 \;; }
           copy_artifacts dartmonkey
           copy_artifacts bloonchipper
+          copy_artifacts helipilot
 
       - name: Archive tests binaries
         uses: actions/upload-artifact@v3
