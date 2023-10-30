@@ -22,6 +22,14 @@ cd ~/chromiumos/src
 cros_sdk --download
 cros_sdk -- bash -c "sudo cros_setup_toolchains &> /dev/null" &> /dev/null
 
+# This directory is sometimes created is such a way that it is owned
+# by root instead of the 'runner' user. During test building some compilers (eg. Go, ccache)
+# will try to cache compilation result in this directory, but will not be able
+# to do so as the test building is performed as a regular user (the cros_sdk 
+# program cannot be started from as root). Solution is to remove that directory
+# so it can be recreated and accessed during test building from as a normal user 
+cros_sdk -- bash -c "sudo rm -rf ~/.cache"
+
 # Build examples
 cros_sdk -- bash -c "cd ../platform/ec; make tests BOARD=dartmonkey -j 4"
 cros_sdk -- bash -c "cd ../platform/ec; make tests BOARD=bloonchipper -j 4"
