@@ -69,7 +69,7 @@ def copy_artifacts(board):
 
 
 with open("tests.yml", "w") as tests:
-    for board, (uart, timeout) in { 'dartmonkey': ("usart1", 15), 'bloonchipper': ("usart2", 15) }.items():
+    for board, (uart, timeout) in { 'dartmonkey': ("usart1", 15), 'bloonchipper': ("usart2", 15), 'helipilot': ("cr_uart1", 15) }.items():
         copy_artifacts(board)
         generate_tests(board, uart, timeout)
         tests.write(f"- {board}.robot\n")

@@ -25,3 +25,6 @@ bloonchipper:
   skip:
     - fpsensor_hw
     - std_vector
+helipilot:
+  custom: []
+  skip: []

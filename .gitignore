@@ -6,4 +6,5 @@ artifacts/
 */tests/
 bloonchipper.robot
 dartmonkey.robot
+helipilot.robot
 tests.yml
