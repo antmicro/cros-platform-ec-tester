@@ -47,6 +47,47 @@ def register_bootloader():
     
     register_bootrom_hook(0x0, bootloader)
 
+# Based on: https://chromium.googlesource.com/chromiumos/platform/ec/+/6898a6542ed0238cc182948f56e3811534db1a38/chip/npcx/trng.c
+def register_trng_functions():
+    DRGB_BASE_ADDRESS = 0x00000110
+    SHA_BASE_ADDRESS = 0x0000015C
+
+    POINTER_SIZE = 0x4
+
+    DRBG_CONTEXT_SIZE = 240
+
+    NCL_STATUS_OK = 0xA5A5
+
+    def create_hook(name, return_value=NCL_STATUS_OK):
+        def hook(cpu, addr):
+            cpu.NoisyLog("Entering '{0}' hook that returns 0x{1:X}", name, return_value)
+            cpu.SetRegisterUnsafe(0, RegisterValue.Create(return_value, 32))
+            cpu.PC = cpu.LR
+        return hook
+
+    DRGB_FUNCTIONS = [
+        create_hook("get_context_size", DRBG_CONTEXT_SIZE),
+        create_hook("init_context"),
+        create_hook("power"),
+        create_hook("finalize_context"),
+        create_hook("init"),
+        create_hook("config"),
+        create_hook("instantiate"),
+        create_hook("uninstantiate"),
+        create_hook("reseed"),
+        create_hook("generate"),
+        create_hook("clear"),
+    ]
+
+    SHA_FUNCTIONS = [
+        create_hook("ncl_sha"),
+    ]
+
+    for base, collection in [(DRGB_BASE_ADDRESS, DRGB_FUNCTIONS), (SHA_BASE_ADDRESS, SHA_FUNCTIONS)]:
+        for i, func in enumerate(collection):
+            register_bootrom_hook(base + i * POINTER_SIZE, func)
+
 
 def mc_register_bootrom_functions():
     register_bootloader()
+    register_trng_functions()
