@@ -4,8 +4,8 @@ mach create $name
 
 machine LoadPlatformDescription $ORIGIN/nuvoton_npcx9.repl
 
-i $ORIGIN/helipilot/bootloader.py
-register_bootloader
+i $ORIGIN/helipilot/bootrom.py
+register_bootrom_functions
 
 $bin?=$ORIGIN/helipilot/ec.bin
 $elf_ro?=$ORIGIN/helipilot/ec.RO.elf
