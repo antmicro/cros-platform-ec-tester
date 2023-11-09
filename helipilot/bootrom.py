@@ -162,7 +162,25 @@ def register_ncl_functions():
         for i, func in enumerate(collection):
             register_bootrom_hook(base + i * POINTER_SIZE, func)
 
+# Based on: https://chromium.googlesource.com/chromiumos/platform/ec/+/6898a6542ed0238cc182948f56e3811534db1a38/chip/npcx/rom_chip.h
+def register_download_from_flash():
+    def download_from_flash(cpu, addr):
+        src_offset = cpu.GetRegisterUnsafe(0).RawValue
+        dest_addr = cpu.GetRegisterUnsafe(1).RawValue
+        size = cpu.GetRegisterUnsafe(2).RawValue
+        exe_addr = self.Machine.SystemBus.ReadDoubleWord(cpu.SP.RawValue)
+
+        data = self.Machine["sysbus.internal_flash"].ReadBytes(src_offset, size)
+        self.Machine.SystemBus.WriteBytes(data, dest_addr)
+
+        cpu.PC = RegisterValue.Create(exe_addr, 32)
+
+        cpu.InfoLog("Downloading from flash offset 0x{0:X} to 0x{1:X} ({2} bytes) and jumping to 0x{3:X}", src_offset, dest_addr, size, exe_addr)
+
+    register_bootrom_hook(0x40, download_from_flash)
+
 
 def mc_register_bootrom_functions():
     register_bootloader()
     register_ncl_functions()
+    register_download_from_flash()
