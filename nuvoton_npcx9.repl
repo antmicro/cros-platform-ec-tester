@@ -66,6 +66,9 @@ itim32_6: Timers.NPCX_ITIM32 @ sysbus 0x400BA000
     apb2Frequency: 1000000
     -> nvic@45
 
+image_type: Memory.ArrayMemory @ sysbus 0x4000C009
+    size: 0x1
+
 sysbus:
     init:
         Tag <0x400C3000 0x400> "System Configuration"
