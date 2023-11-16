@@ -11,10 +11,10 @@ usermod -aG sudo runner
 
 echo 'runner ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/runner
 
-cp run_user.sh /home/runner
+cp run_user.sh helipilot_build.patch /home/runner
 cd /home/runner
 
-chown runner run_user.sh
+chown runner run_user.sh helipilot_build.patch
 chmod +x run_user.sh
 
 sudo -u runner ./run_user.sh

@@ -17,6 +17,11 @@ cd ~/chromiumos
 repo init -u https://chromium.googlesource.com/chromiumos/manifest -b main
 repo sync -j4 &> /dev/null
 
+# Currently helipilot contains two smt32 specific tests (cortexm_fpu, stm32f_rtc)
+# on it's test list, that will not build for helipilot. The following patch removes them
+cd ~/chromiumos/src/platform/ec
+git apply ~/helipilot_build.patch
+
 cd ~/chromiumos/src
 
 cros_sdk --download

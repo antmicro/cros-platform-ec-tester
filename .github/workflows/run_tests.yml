@@ -28,7 +28,7 @@ jobs:
         run: |
           wget https://cloud.debian.org/images/cloud/bullseye/latest/${{env.IMG_FILE}}
           qemu-img resize ${{env.IMG_FILE}} 120G
-          LIBGUESTFS_BACKEND=direct virt-copy-in -a ${{env.IMG_FILE}} .github/scripts/run_admin.sh .github/scripts/run_user.sh /root
+          LIBGUESTFS_BACKEND=direct virt-copy-in -a ${{env.IMG_FILE}} .github/scripts/run_admin.sh .github/scripts/run_user.sh .github/scripts/helipilot_build.patch /root
 
       - name: Build tests
         run: |
