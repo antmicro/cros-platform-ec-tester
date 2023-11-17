@@ -27,4 +27,5 @@ bloonchipper:
     - std_vector
 helipilot:
   custom: []
-  skip: []
+  skip:
+    - fpsensor
