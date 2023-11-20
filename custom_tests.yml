@@ -26,9 +26,9 @@ bloonchipper:
     - fpsensor_hw
     - std_vector
 helipilot:
-  custom: []
-  skip:
+  custom:
     - fpsensor
+  skip:
     - flash_write_protect
     - libcxx
     - std_vector
