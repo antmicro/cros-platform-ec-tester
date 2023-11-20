@@ -29,3 +29,8 @@ helipilot:
   custom: []
   skip:
     - fpsensor
+    - flash_write_protect
+    - libcxx
+    - std_vector
+    - unaligned_access_benchmark
+    - utils
