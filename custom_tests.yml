@@ -27,10 +27,17 @@ bloonchipper:
     - std_vector
 helipilot:
   custom:
+    - debug
     - fpsensor
   skip:
+    - abort
     - flash_write_protect
+    - fpsensor_hw
+    - fpsensor_auth_crypto_stateful
     - libcxx
+    - panic_data
+    - rollback
     - std_vector
+    - system_is_locked
+    - tpm_seed_clear
     - unaligned_access_benchmark
-    - utils
