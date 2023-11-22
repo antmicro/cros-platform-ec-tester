@@ -82,6 +82,19 @@ def register_ncl_functions():
             cpu.PC = cpu.LR
         return hook
 
+    rng = Antmicro.Renode.Core.PseudorandomNumberGenerator()
+
+    def trng_generate(cpu, addr):
+        out_buff = cpu.GetRegisterUnsafe(3).RawValue
+        out_buff_len = self.Machine.SystemBus.ReadDoubleWord(cpu.SP.RawValue)
+
+        data = System.Array[System.Byte](range(out_buff_len))
+        rng.NextBytes(data)
+        self.Machine.SystemBus.WriteBytes(data, out_buff)
+
+        cpu.SetRegisterUnsafe(0, RegisterValue.Create(NCL_STATUS_OK, 32))
+        cpu.PC = cpu.LR
+
     DRGB_FUNCTIONS = [
         create_hook("get_context_size", DRBG_CONTEXT_SIZE),
         create_hook("init_context"),
@@ -92,7 +105,7 @@ def register_ncl_functions():
         create_hook("instantiate"),
         create_hook("uninstantiate"),
         create_hook("reseed"),
-        create_hook("generate"),
+        trng_generate,
         create_hook("clear"),
     ]
 
