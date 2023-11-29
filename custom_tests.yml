@@ -29,6 +29,8 @@ helipilot:
   custom:
     - debug
     - fpsensor
+    - rollback_entropy
+    - sbrk
   skip:
     - abort
     - flash_write_protect
