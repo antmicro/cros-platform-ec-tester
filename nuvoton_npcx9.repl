@@ -69,6 +69,9 @@ itim32_6: Timers.NPCX_ITIM32 @ sysbus 0x400BA000
 image_type: Memory.ArrayMemory @ sysbus 0x4000C009
     size: 0x1
 
+twd: Timers.NPCX_TWD @ sysbus 0x400D8000
+    -> nvic@31
+
 sysbus:
     init:
         Tag <0x400C3000 0x400> "System Configuration"
@@ -116,7 +119,6 @@ sysbus:
         Tag <0x4008A000 0x100> "PWM5"
         Tag <0x4008C000 0x100> "PWM6"
         Tag <0x4008E000 0x100> "PWM7"
-        Tag <0x400D8000 0x100> "TWD"
         Tag <0x400D1000 0x100> "ADC"
         Tag <0x40009000 0x100> "SMBUS0"
         Tag <0x4000B000 0x100> "SMBUS1"
