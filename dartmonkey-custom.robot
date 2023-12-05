@@ -70,35 +70,15 @@ Should Run test-benchmark.bin
     Write Line To Uart        runtest
     Wait For Line On Uart     Pass!
 
-Should Run spixfer test
-    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
-    Create Machine            fpsensor
-    Execute Command           machine LoadPlatformDescriptionFromString 'sensor: Sensors.GenericSPISensor @ spi4'
-    Execute Command           spi4.sensor FeedSample 0xAB
-    Execute Command           spi4.sensor FeedSample 0xAB
-    Execute Command           spi4.sensor FeedSample 0xCD
-    Execute Command           spi4.sensor FeedSample 0xEF
-    Start Emulation
-    Wait For System Prompt
-    Write Line To Uart        spixfer rlen 0 0 3
-    Wait For Line On Uart     Data: abcdef
-    Execute Command           spi4.sensor FeedSample 0xFE
-    Execute Command           spi4.sensor FeedSample 0xFE
-    Execute Command           spi4.sensor FeedSample 0xDC
-    Execute Command           spi4.sensor FeedSample 0xBA
-    Write Line To Uart        spixfer rlen 0 0 3
-    Wait For Line On Uart     Data: fedcba
-
 Should Run test-fpsensor_hw.bin
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
     Create Machine            fpsensor_hw
-    Execute Command           machine LoadPlatformDescriptionFromString 'sensor: Sensors.GenericSPISensor @ spi4'
     # Hardware id of the expected fpsensor
-    Execute Command           spi4.sensor FeedSample 0x00
-    Execute Command           spi4.sensor FeedSample 0x14
+    Execute Command           spi4.fpsensor FeedSample 0x00
+    Execute Command           spi4.fpsensor FeedSample 0x14
     # Last 4 bits are random as this is manufacturing id that should be discarded by the test
     ${manufacturing_id}=      Generate Random String  1  [NUMBERS]ABCDEF
-    Execute Command           spi4.sensor FeedSample 0x0${manufacturing_id}
+    Execute Command           spi4.fpsensor FeedSample 0x0${manufacturing_id}
     Start Emulation
     Wait For System Prompt
     Write Line To Uart        runtest
