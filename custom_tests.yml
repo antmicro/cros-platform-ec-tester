@@ -22,8 +22,8 @@ bloonchipper:
     - rollback_entropy
     - benchmark
     - sbrk
-  skip:
     - fpsensor_hw
+  skip:
     - std_vector
 helipilot:
   custom:

@@ -28,7 +28,7 @@ Should Run test-system_is_locked.bin wp_off
     ...  sysbus LoadBinary $bin 0x08000000
     ...  sysbus LoadSymbolsFrom $elf_ro
     ...  sysbus LoadSymbolsFrom $elf_rw
-    ...  gpiob.GPIO_WP Press
+    ...  gpioPortB.GPIO_WP Press
     ...  cpu PC 0x8000219
     ...  """
     Execute Command           macro reset${\n}${RESET_MACRO}
@@ -75,5 +75,20 @@ Should Run test-benchmark.bin
 Should Run test-sbrk.bin
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
     Start In RO               test-sbrk.bin
+    Write Line To Uart        runtest
+    Wait For Line On Uart     Pass!
+
+
+Should Run test-fpsensor_hw.bin
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Create Machine            fpsensor_hw
+    # Hardware id of the expected fpsensor
+    Execute Command           spi2.fpsensor FeedSample 0x00
+    Execute Command           spi2.fpsensor FeedSample 0x02
+    # Last 4 bits are random as this is manufacturing id that should be discarded by the test
+    ${manufacturing_id}=      Generate Random String  1  [NUMBERS]ABCDEF
+    Execute Command           spi2.fpsensor FeedSample 0x1${manufacturing_id}
+    Start Emulation
+    Wait For System Prompt
     Write Line To Uart        runtest
     Wait For Line On Uart     Pass!

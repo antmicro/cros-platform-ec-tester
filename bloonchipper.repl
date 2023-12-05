@@ -1,0 +1,16 @@
+using "platforms/cpus/stm32f4.repl"
+
+cpu:
+    fpuInterruptNumber: 81
+
+rtc:
+    wakeupTimerFrequency: 32000
+
+timer2:
+    frequency: 96000000
+
+GPIO_WP: Miscellaneous.Button @ gpioPortB 7
+    invert: true
+    -> gpioPortB@7
+
+fpsensor: Sensors.GenericSPISensor @ spi2
