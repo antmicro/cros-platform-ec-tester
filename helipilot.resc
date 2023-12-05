@@ -2,7 +2,7 @@ using sysbus
 $name?="helipilot"
 mach create $name
 
-machine LoadPlatformDescription $ORIGIN/nuvoton_npcx9.repl
+machine LoadPlatformDescription $ORIGIN/helipilot.repl
 
 i $ORIGIN/helipilot/bootrom.py
 register_bootrom_functions
