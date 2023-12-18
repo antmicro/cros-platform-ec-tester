@@ -37,3 +37,18 @@ Should Run test-system_is_locked.bin wp_on
 Should Run test-system_is_locked.bin wp_off
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
     Run Test                  test-system_is_locked.bin      wp_off
+
+
+Should Run test-fpsensor_hw.bin
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Create Machine            fpsensor_hw
+    # Hardware id of the expected fpsensor
+    Execute Command           spip.fpsensor FeedSample 0x00
+    Execute Command           spip.fpsensor FeedSample 0x02
+    # Last 4 bits are random as this is manufacturing id that should be discarded by the test
+    ${manufacturing_id}=      Generate Random String  1  [NUMBERS]ABCDEF
+    Execute Command           spip.fpsensor FeedSample 0x1${manufacturing_id}
+    Start Emulation
+    Wait For System Prompt
+    Write Line To Uart        runtest
+    Wait For Line On Uart     Pass!
