@@ -4,9 +4,6 @@ mach create $name
 
 machine LoadPlatformDescription $ORIGIN/helipilot.repl
 
-i $ORIGIN/helipilot/bootrom.py
-register_bootrom_functions
-
 $bin?=$ORIGIN/helipilot/ec.bin
 $elf_ro?=$ORIGIN/helipilot/ec.RO.elf
 $elf_rw?=$ORIGIN/helipilot/ec.RW.elf
