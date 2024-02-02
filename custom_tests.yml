@@ -40,3 +40,4 @@ helipilot:
     - rollback
     - std_vector
     - unaligned_access_benchmark
+    - rtc_npcx9
