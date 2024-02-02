@@ -18,7 +18,7 @@ Create Machine
 
 Wait For System Prompt
     Wait For Line On Uart     MKBP not cleared within threshold
-    Wait For Line On Uart     MKBP: The AP is failing to respond despite being powered on.
+    Wait For Line On Uart     MKBP: The AP is failing to respond because it is sleeping or off
     Write Line To Uart
     Wait For Prompt On Uart   >
 
