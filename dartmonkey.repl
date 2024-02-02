@@ -1,4 +1,4 @@
-using "platforms/cpus/stm32h743.repl"
+using "platforms/cpus/stm32h753.repl"
 
 GPIO_WP: Miscellaneous.Button @ gpioPortB 7
     invert: true
