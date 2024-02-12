@@ -1,20 +1,12 @@
-diff --git a/board/helipilot/build.mk b/board/helipilot/build.mk
-index 23b1945fed..6ccb2d6613 100644
---- a/board/helipilot/build.mk
-+++ b/board/helipilot/build.mk
-@@ -30,7 +30,6 @@ test-list-y=\
-        benchmark \
-        boringssl_crypto \
-        compile_time_macros \
--       cortexm_fpu \
-        crc \
-        debug \
-        exception \
-@@ -64,7 +63,6 @@ test-list-y=\
-        static_if \
-        stdlib \
-        std_vector \
--       stm32f_rtc \
-        system_is_locked \
-        timer \
-        timer_dos \
+diff --git a/chip/npcx/config_chip-npcx9.h b/chip/npcx/config_chip-npcx9.h
+index b9ddbd91d0..3b761f6599 100644
+--- a/chip/npcx/config_chip-npcx9.h
++++ b/chip/npcx/config_chip-npcx9.h
+@@ -137,6 +137,6 @@
+ #endif
+ 
+ /* All NPCX9 variants support SHA256 accelerator. */
+-#define CONFIG_SHA256_HW_ACCELERATE
++#define CONFIG_SHA256_SW
+ 
+ #endif /* __CROS_EC_CONFIG_CHIP_NPCX9_H */
