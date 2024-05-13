@@ -11,7 +11,4 @@ send "root\n"
 expect "root@debian:"
 send "./run_admin.sh\n"
 
-expect "Enable color display in this user account (y/N)?"
-send "y\n"
-
 expect eof

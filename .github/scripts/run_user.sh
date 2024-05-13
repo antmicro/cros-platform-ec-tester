@@ -6,16 +6,15 @@ git config --global user.name "Antmicro"
 git config --global user.email "contact@antmicro.com"
 
 # Install depot_tools
-git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git &> /dev/null
+git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
 export PATH="${PWD}/depot_tools:${PATH}"
 
 mkdir -p ~/chromiumos
 cd ~/chromiumos
 
 # Get the source
-# repo init cannot be silent as it prompts us for input
-repo init -u https://chromium.googlesource.com/chromiumos/manifest -b main
-repo sync -j4 &> /dev/null
+repo init -u https://chromium.googlesource.com/chromiumos/manifest.git
+repo sync -j 4
 
 # Currently helipilot contains two smt32 specific tests (cortexm_fpu, stm32f_rtc)
 # on it's test list, that will not build for helipilot. The following patch removes them
@@ -25,7 +24,6 @@ git apply ~/helipilot_build.patch
 cd ~/chromiumos/src
 
 cros_sdk --download
-cros_sdk -- bash -c "sudo cros_setup_toolchains &> /dev/null" &> /dev/null
 
 # This directory is sometimes created is such a way that it is owned
 # by root instead of the 'runner' user. During test building some compilers (eg. Go, ccache)
