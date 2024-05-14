@@ -38,13 +38,16 @@ jobs:
 
       - name: Extract artifacts
         run: |
-          mkdir -p artifacts-raw artifacts artifacts/dartmonkey artifacts/bloonchipper artifacts/helipilot
+          mkdir -p artifacts-raw artifacts
           LIBGUESTFS_BACKEND=direct virt-copy-out -a ${{env.IMG_FILE}} /home/runner/chromiumos/src/platform/ec/build /root/vm_log.txt artifacts-raw
           cp artifacts-raw/vm_log.txt artifacts
-          copy_artifacts() { find artifacts-raw/build/$1 \( -iname 'test-*.bin' -o -iname '*.RO.elf' -o -iname '*.RW.elf' \) -exec cp '{}' artifacts/$1 \;; }
+          source .github/scripts/copy_helpers.sh
           copy_artifacts dartmonkey
           copy_artifacts bloonchipper
           copy_artifacts helipilot
+          copy_artifacts_zephyr brya
+          copy_artifacts_zephyr rex
+          copy_artifacts_zephyr skyrim
 
       - name: Archive tests binaries
         uses: actions/upload-artifact@v3
