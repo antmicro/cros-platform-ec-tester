@@ -29,6 +29,13 @@ Should Run test-sbrk.bin
     Wait For Line On Uart     Pass!
 
 
+Should Run test-flash_write_protect.bin
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Start In RO               test-flash_write_protect.bin
+    Write Line To Uart        runtest
+    Wait For Line On Uart     Pass!
+
+
 Should Run test-system_is_locked.bin wp_on
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
     Run Test                  test-system_is_locked.bin      wp_on
@@ -36,7 +43,12 @@ Should Run test-system_is_locked.bin wp_on
 
 Should Run test-system_is_locked.bin wp_off
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
-    Run Test                  test-system_is_locked.bin      wp_off
+    Create Machine            system_is_locked
+    # Disable write protection
+    Execute Command           gpioa.GPIO_WP Press
+    Wait For System Prompt
+    Write Line To Uart        runtest wp_off
+    Wait For Line On Uart     Pass!
 
 
 Should Run test-fpsensor_hw.bin
