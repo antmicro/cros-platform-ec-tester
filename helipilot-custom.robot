@@ -5,14 +5,14 @@ Should Run test-debug.bin no_debugger
     Run Test                  test-debug.bin                 no_debugger
 
 
-Should Run test-fpsensor.bin uart
+Should Run test-fp_transport.bin uart
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
-    Run Test                  test-fpsensor.bin              uart
+    Run Test                  test-fp_transport.bin          uart
 
 
-Should Run test-fpsensor.bin spi
+Should Run test-fp_transport.bin spi
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
-    Run Test                  test-fpsensor.bin              spi
+    Run Test                  test-fp_transport.bin          spi
 
 
 Should Run test-rollback_entropy.bin
