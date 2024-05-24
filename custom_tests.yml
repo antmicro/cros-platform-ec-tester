@@ -1,6 +1,6 @@
 dartmonkey:
   custom:
-    - fpsensor
+    - fp_transport
     - debug
     - system_is_locked
     - flash_write_protect
@@ -14,7 +14,7 @@ dartmonkey:
     - fpsensor_auth_crypto_stateful
 bloonchipper:
   custom:
-    - fpsensor
+    - fp_transport
     - debug
     - system_is_locked
     - flash_write_protect
@@ -28,7 +28,7 @@ bloonchipper:
 helipilot:
   custom:
     - debug
-    - fpsensor
+    - fp_transport
     - rollback_entropy
     - sbrk
     - system_is_locked
