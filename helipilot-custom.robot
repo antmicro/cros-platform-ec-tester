@@ -36,6 +36,16 @@ Should Run test-flash_write_protect.bin
     Wait For Line On Uart     Pass!
 
 
+Should Run test-flash_physical.bin
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Create Machine            flash_physical
+    # Disable write protection
+    Execute Command           gpioa.GPIO_WP Press
+    Wait For System Prompt
+    Write Line To Uart        runtest
+    Wait For Line On Uart     Pass!
+
+
 Should Run test-system_is_locked.bin wp_on
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
     Run Test                  test-system_is_locked.bin      wp_on

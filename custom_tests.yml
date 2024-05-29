@@ -34,6 +34,7 @@ helipilot:
     - system_is_locked
     - fpsensor_hw
     - flash_write_protect
+    - flash_physical
   skip:
     - fpsensor_auth_crypto_stateful
     - libcxx
