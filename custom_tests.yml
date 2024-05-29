@@ -35,6 +35,7 @@ helipilot:
     - fpsensor_hw
     - flash_write_protect
     - flash_physical
+    - utils
   skip:
     - fpsensor_auth_crypto_stateful
     - libcxx
