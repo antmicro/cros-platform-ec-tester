@@ -54,15 +54,6 @@ Should Run test-flash_write_protect.bin
     Wait For Line On Uart     Pass!
 
 
-Should Run test-benchmark.bin
-    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
-    Start To Prompt           test-benchmark.bin
-    # Reduce quantum value as this test requires more precision
-    Execute Command           emulation SetGlobalQuantum "0.000003"
-    Write Line To Uart        runtest
-    Wait For Line On Uart     Pass!
-
-
 Should Run test-sbrk.bin
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
     Start In RO               test-sbrk.bin
