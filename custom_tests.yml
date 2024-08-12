@@ -6,7 +6,6 @@ dartmonkey:
     - flash_write_protect
     - rollback
     - rollback_entropy
-    - benchmark
     - fpsensor_hw
     - sbrk
   skip:
@@ -20,7 +19,6 @@ bloonchipper:
     - flash_write_protect
     - rollback
     - rollback_entropy
-    - benchmark
     - sbrk
     - fpsensor_hw
   skip:
