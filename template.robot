@@ -42,6 +42,12 @@ Start In RO
     Write Line To Uart        reboot ro
     Wait For System Prompt
 
+Run Test In RO
+    [Arguments]               ${test}   ${argument}=${EMPTY}
+    Start In RO               ${test}
+    Write Line To Uart        runtest ${argument}
+    Wait For Line On Uart     Pass!
+
 Expect MPU failure
     [Arguments]               ${test}   ${argument}=${EMPTY}
     Start To Prompt           ${test}
