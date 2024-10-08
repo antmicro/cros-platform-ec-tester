@@ -50,7 +50,7 @@ jobs:
           copy_artifacts_zephyr skyrim
 
       - name: Archive tests binaries
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-binaries
           path: artifacts/
@@ -61,7 +61,7 @@ jobs:
     needs: build
     steps:
       - name: Clone repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         run: |
@@ -75,7 +75,7 @@ jobs:
           git config --global user.email "contact@antmicro.com"
 
       - name: Download artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: test-binaries
           path: ./artifacts
@@ -92,7 +92,7 @@ jobs:
 
       - name: Archive tests results
         if: ${{ always() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: |
