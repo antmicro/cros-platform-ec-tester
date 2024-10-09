@@ -5,6 +5,7 @@ ${BIN_PATH}                   ${CURDIR}/${PLATFORM}
 ${TESTS_PATH}                 ${BIN_PATH}/tests
 ${TIMEOUT}                    %TIMEOUT%
 @{pattern}                    test-*.bin
+${MPU_FAILURE_MESSAGE}        Data access violation, mfar =
 
 *** Keywords ***
 Create Machine
@@ -31,10 +32,10 @@ Start To Prompt
     Wait For System Prompt
 
 Run Test
-    [Arguments]               ${test}   ${argument}=${EMPTY}
+    [Arguments]               ${test}   ${argument}=${EMPTY}   ${message}=Pass!
     Start To Prompt           ${test}
     Write Line To Uart        runtest ${argument}
-    Wait For Line On Uart     Pass!
+    Wait For Line On Uart     ${message}
 
 Start In RO
     [Arguments]               ${test}
@@ -43,15 +44,9 @@ Start In RO
     Wait For System Prompt
 
 Run Test In RO
-    [Arguments]               ${test}   ${argument}=${EMPTY}
+    [Arguments]               ${test}   ${argument}=${EMPTY}   ${message}=Pass!
     Start In RO               ${test}
     Write Line To Uart        runtest ${argument}
-    Wait For Line On Uart     Pass!
-
-Expect MPU failure
-    [Arguments]               ${test}   ${argument}=${EMPTY}
-    Start To Prompt           ${test}
-    Write Line To Uart        runtest ${argument}
-    Wait For Line On Uart     Data access violation, mfar =
+    Wait For Line On Uart     ${message}
 
 *** Test Cases ***
