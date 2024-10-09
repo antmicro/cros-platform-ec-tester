@@ -32,12 +32,12 @@ Should Run test-system_is_locked.bin wp_off
 
 Should Run test-rollback.bin region0
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
-    Expect MPU failure        test-rollback.bin              region0
+    Run Test                  test-rollback.bin              region0  ${MPU_FAILURE_MESSAGE}
 
 
 Should Run test-rollback.bin region1
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
-    Expect MPU failure        test-rollback.bin              region1
+    Run Test                  test-rollback.bin              region1  ${MPU_FAILURE_MESSAGE}
 
 
 Should Run test-rollback_entropy.bin
@@ -68,3 +68,13 @@ Should Run test-fpsensor_hw.bin
     Wait For System Prompt
     Write Line To Uart        runtest
     Wait For Line On Uart     Pass!
+
+
+Should Run test-mpu.bin RW
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Run Test                  test-mpu.bin                   message=${MPU_FAILURE_MESSAGE}
+
+
+Should Run test-mpu.bin RO
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Run Test In RO            test-mpu.bin                   message=${MPU_FAILURE_MESSAGE}
