@@ -14,7 +14,7 @@ Create Machine
     Execute Command           $elf_rw=@${TESTS_PATH}/${test}.RW.elf
     Execute Script            ${SCRIPT}
     Execute Command           logFile $ORIGIN/logs/%PLATFORM%-${test}.log
-    Create Terminal Tester    sysbus.%USART%  timeout=${TIMEOUT}
+    Create Terminal Tester    sysbus.%USART%  timeout=${TIMEOUT}  defaultPauseEmulation=True
 
 Wait For System Prompt
     Wait For Line On Uart     MKBP not cleared within threshold
