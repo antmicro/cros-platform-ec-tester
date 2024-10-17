@@ -45,7 +45,6 @@ jobs:
           copy_artifacts dartmonkey
           copy_artifacts bloonchipper
           copy_artifacts helipilot
-          copy_artifacts_zephyr brya
           copy_artifacts_zephyr rex
           copy_artifacts_zephyr skyrim
 
