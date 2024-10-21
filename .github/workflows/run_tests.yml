@@ -88,6 +88,7 @@ jobs:
         with:
           renode-version: 'latest'
           tests-to-run: '-t tests.yml'
+          renode-arguments: '--test-timeout "10 minutes"'
 
       - name: Archive tests results
         if: ${{ always() }}
