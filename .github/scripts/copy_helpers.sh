@@ -7,5 +7,5 @@ copy_artifacts() {
 copy_artifacts_zephyr() {
     # $1 - board name
     mkdir -p "artifacts/$1"
-    find "artifacts-raw/build/zephyr/$1/output" \( -iname '*.bin' -o -iname '*.ro.elf' -o -iname '*.rw.elf' \) -exec cp '{}' "artifacts/$1" \;
+    find "artifacts-raw/build/zephyr/$1/output" \( -iname '*.bin' -o -iname '*.ro.elf' -o -iname '*.rw.elf' \) -exec cp '{}' "artifacts/$1" \; || true
 }
