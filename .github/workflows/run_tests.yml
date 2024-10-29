@@ -58,6 +58,8 @@ jobs:
     container: debian:bullseye
     runs-on: [self-hosted, Linux, X64]
     needs: build
+    env:
+      RENODE_VARIANT: "dotnet-portable"
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
@@ -66,7 +68,7 @@ jobs:
         run: |
           apt-mark hold tzdata
           apt update && apt upgrade -y
-          DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends python3 python3-pip python3-venv python3-yaml git
+          DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends python3 python3-pip python3-venv python3-yaml git libicu-dev
 
       - name: Configure git
         run: |
@@ -84,10 +86,12 @@ jobs:
           ./generate_tests.py
 
       - name: Run tests
-        uses: antmicro/renode-test-action@v3.1.0
-        with:
-          renode-version: 'latest'
-          tests-to-run: '-t tests.yml'
+        run: |
+          python3 -m venv .venv
+          source .venv/bin/activate
+          pip3 install git+https://github.com/antmicro/renode-run
+          renode-run download --renode-variant "${RENODE_VARIANT}"
+          renode-run test --renode-variant "${RENODE_VARIANT}" -- -t tests.yml --test-timeout "10 minutes"
 
       - name: Archive tests results
         if: ${{ always() }}
