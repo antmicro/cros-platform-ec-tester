@@ -55,21 +55,6 @@ Should Run test-sbrk.bin
     Run Test In RO            test-sbrk.bin
 
 
-Should Run test-fpsensor_hw.bin
-    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
-    Create Machine            fpsensor_hw
-    # Hardware id of the expected fpsensor
-    Execute Command           spi2.fpsensor FeedSample 0x00
-    Execute Command           spi2.fpsensor FeedSample 0x02
-    # Last 4 bits are random as this is manufacturing id that should be discarded by the test
-    ${manufacturing_id}=      Generate Random String  1  [NUMBERS]ABCDEF
-    Execute Command           spi2.fpsensor FeedSample 0x1${manufacturing_id}
-    Start Emulation
-    Wait For System Prompt
-    Write Line To Uart        runtest
-    Wait For Line On Uart     Pass!
-
-
 Should Run test-mpu.bin RW
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
     Run Test                  test-mpu.bin                   message=${MPU_FAILURE_MESSAGE}

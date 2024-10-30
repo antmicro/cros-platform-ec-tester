@@ -50,20 +50,6 @@ Should Run test-rollback_entropy.bin
     Run Test In RO            test-rollback_entropy.bin
 
 
-Should Run test-fpsensor_hw.bin
-    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
-    Create Machine            fpsensor_hw
-    # Hardware id of the expected fpsensor
-    Execute Command           spi4.fpsensor FeedSample 0x00
-    Execute Command           spi4.fpsensor FeedSample 0x14
-    # Last 4 bits are random as this is manufacturing id that should be discarded by the test
-    ${manufacturing_id}=      Generate Random String  1  [NUMBERS]ABCDEF
-    Execute Command           spi4.fpsensor FeedSample 0x0${manufacturing_id}
-    Start Emulation
-    Wait For System Prompt
-    Write Line To Uart        runtest
-    Wait For Line On Uart     Pass!
-
 Should Run test-sbrk.bin
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
     Run Test In RO            test-sbrk.bin

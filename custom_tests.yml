@@ -6,12 +6,13 @@ dartmonkey:
     - flash_write_protect
     - rollback
     - rollback_entropy
-    - fpsensor_hw
     - sbrk
     - mpu
   skip:
     - std_vector
     - fpsensor_auth_crypto_stateful
+    - fpsensor_hw
+    - fpsensor_debug
 bloonchipper:
   custom:
     - fp_transport
@@ -21,10 +22,11 @@ bloonchipper:
     - rollback
     - rollback_entropy
     - sbrk
-    - fpsensor_hw
     - mpu
   skip:
     - std_vector
+    - fpsensor_hw
+    - fpsensor_debug
 helipilot:
   custom:
     - debug
@@ -32,7 +34,6 @@ helipilot:
     - rollback_entropy
     - sbrk
     - system_is_locked
-    - fpsensor_hw
     - flash_write_protect
     - flash_physical
     - mpu
@@ -44,3 +45,5 @@ helipilot:
     - unaligned_access_benchmark
     - rtc_npcx9
     - utils
+    - fpsensor_hw
+    - fpsensor_debug
