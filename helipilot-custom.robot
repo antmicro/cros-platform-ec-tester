@@ -63,3 +63,13 @@ Should Run test-mpu.bin RW
 Should Run test-mpu.bin RO
     Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
     Run Test In RO            test-mpu.bin                   message=${MPU_FAILURE_MESSAGE}
+
+
+Should Run test-rollback.bin region0
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Run Test                  test-rollback.bin              region0  ${MPU_FAILURE_MESSAGE}
+
+
+Should Run test-rollback.bin region1
+    Set Test Variable         ${TESTS_PATH}                  ${TESTS_PATH}/custom
+    Run Test                  test-rollback.bin              region1  ${MPU_FAILURE_MESSAGE}
