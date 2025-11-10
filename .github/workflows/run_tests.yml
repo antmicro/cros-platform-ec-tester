@@ -16,7 +16,7 @@ jobs:
       IMG_FILE: debian-11-nocloud-amd64.qcow2
     steps:
       - name: Clone repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
       - name: Install dependencies
         run: |
@@ -43,7 +43,7 @@ jobs:
           copy_artifacts bloonchipper
 
       - name: Archive tests binaries
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-binaries
           path: artifacts/
@@ -54,7 +54,7 @@ jobs:
     needs: build
     steps:
       - name: Clone repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
       - name: Install dependencies
         run: |
@@ -85,7 +85,7 @@ jobs:
 
       - name: Archive tests results
         if: ${{ always() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: |
