@@ -1,0 +1,112 @@
+name: Sanok EC build
+on:
+  push:
+  schedule:
+    - cron: "0 23 * * *" # run daily at 23:00 (UTC)
+  workflow_dispatch:
+
+jobs:
+  build:
+    container: debian:bookworm
+    runs-on: [self-hosted, Linux, X64]
+    env:
+      CHROMIUMOS: /home/antmicro/chromiumos
+      CHROMIUMOS_SHA: dc3f359384c44a7463dd1e5c4d81ca5affac3073
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          apt update && apt upgrade --no-install-recommends -y
+          DEBIAN_FRONTEND=noninteractive apt install --no-install-recommends -y python3 git curl locales ca-certificates ssh gpg gpg-agent
+          # Set locale
+          sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
+          echo 'LANG=en_US.UTF-8' > /etc/default/locale
+          locale-gen
+
+      - name: Install depot_tools
+        run: |
+          # Setup git
+          git config --global user.name "Antmicro"
+          git config --global user.email "contact@antmicro.com"
+
+          # Install depot_tools
+          git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+          cd depot_tools
+          # Pin version
+          git checkout 565cc4ee354f0c394d0d83301e6658b1fc979c99
+          cd ..
+          echo "${PWD}/depot_tools:" >> "$GITHUB_PATH"
+
+      - name: Set up non-root user
+        run: |
+          # cros_sdk wants to run as a non-root user.
+          useradd -m -s /bin/bash antmicro
+          adduser antmicro sudo
+
+      - name: Cache chroot
+        uses: actions/cache@v4
+        id: cache-chromiumos
+        with:
+          path: ${{ env.CHROMIUMOS }}
+          key: ${{ runner.os }}-${{ env.CHROMIUMOS_SHA }}-v1
+
+      - name: Prepare chroot
+        if: steps.cache-chromiumos.outputs.cache-hit != 'true'
+        run: |
+          set -x
+          export DEBIAN_FRONTEND=noninteractive
+
+          mkdir -p $CHROMIUMOS
+          cd $CHROMIUMOS
+
+          # Clone sources, pinned to a working SHA.
+          repo init -b $CHROMIUMOS_SHA -u https://chromium.googlesource.com/chromiumos/manifest.git
+          repo sync -j 4
+
+          CROS_SDK=$(which cros_sdk)
+          # cros_sdk wants to run as a non-root user.
+          echo "" | su - antmicro "$CROS_SDK --download"
+
+          # This directory is sometimes created is such a way that it is owned
+          # by root instead of the 'runner' user. During test building some compilers (eg. Go, ccache)
+          # will try to cache compilation result in this directory, but will not be able
+          # to do so as the test building is performed as a regular user (the cros_sdk 
+          # program cannot be started from as root). Solution is to remove that directory
+          # so it can be recreated and accessed during test building from as a normal user 
+          echo "" | su - antmicro "$CROS_SDK -- bash -c 'sudo rm -rf ~/.cache'"
+
+      - name: Apply patches
+        run: |
+          # Cherry-pick necessary Sanok EC commits
+          cd ~/chromiumos/src/platform/ec
+          git fetch https://chromium.googlesource.com/chromiumos/platform/ec refs/changes/60/6597060/31 && git cherry-pick FETCH_HEAD
+          git fetch https://chromium.googlesource.com/chromiumos/platform/ec refs/changes/58/6597058/29 && git cherry-pick FETCH_HEAD
+          git fetch https://chromium.googlesource.com/chromiumos/platform/ec refs/changes/55/6597055/27 && git cherry-pick FETCH_HEAD
+
+          # Apply Sanok KConfig patch
+          git apply .github/scripts/sanok_build.patch
+
+          # Cherry-pick necessary Zephyr commits
+          cd ~/chromiumos/src/third_party/zephyr/main
+          git fetch https://chromium.googlesource.com/chromiumos/third_party/zephyr refs/changes/13/7086413/1 && git cherry-pick FETCH_HEAD
+          git fetch https://chromium.googlesource.com/chromiumos/third_party/zephyr refs/changes/11/7086411/1 && git cherry-pick FETCH_HEAD
+          git fetch https://chromium.googlesource.com/chromiumos/third_party/zephyr refs/changes/10/7086410/1 && git cherry-pick FETCH_HEAD
+          git fetch https://chromium.googlesource.com/chromiumos/third_party/zephyr refs/changes/09/7086409/1 && git cherry-pick FETCH_HEAD
+          git fetch https://chromium.googlesource.com/chromiumos/third_party/zephyr refs/changes/08/7086408/1 && git cherry-pick FETCH_HEAD
+
+          # Clone Egis repos
+          cd ~/chromiumos/src/third_party/zephyr
+          git clone git@github.com:EgisMCU/hal_egis.git
+          git clone git@github.com:EgisMCU/egis_module.git
+
+      - name: Build sanok
+        run: |
+          cros_sdk -- bash -c "zmake -l DEBUG build sanok --clobber"
+
+      - name: Archive binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: sanok-binaries
+          path: ~/chromiumos/src/platform/ec/build/zephyr/sanok/output/
