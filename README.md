@@ -1,6 +1,6 @@
 # CrOS EC Tester
 
-Copyright (c) 2020-2024 [Antmicro](https://www.antmicro.com)
+Copyright (c) 2020-2025 [Antmicro](https://www.antmicro.com)
 
 EC Tester presents the testing workflow for [ChromiumOS Embedded Controller software](https://chromium.googlesource.com/chromiumos/platform/ec/).
 It uses GitHub Actions for handling the execution and [Renode](https://renode.io) for testing.
