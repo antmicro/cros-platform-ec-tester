@@ -30,7 +30,7 @@ jobs:
           qemu-img create -f qcow2 temp.qcow2 130G
           LIBGUESTFS_BACKEND=direct virt-resize --expand /dev/sda1 ${{env.IMG_FILE}} temp.qcow2
           mv temp.qcow2 ${{env.IMG_FILE}}
-          LIBGUESTFS_BACKEND=direct virt-copy-in -a ${{env.IMG_FILE}} .github/scripts/run_admin.sh .github/scripts/run_user.sh .github/scripts/helipilot_build.patch /root
+          LIBGUESTFS_BACKEND=direct virt-copy-in -a ${{env.IMG_FILE}} .github/scripts/run_admin.sh .github/scripts/run_user.sh .github/scripts/helipilot_build.patch .github/scripts/sanok_build.patch /root
 
       - name: Build tests
         run: |
@@ -47,6 +47,8 @@ jobs:
           copy_artifacts helipilot
           copy_artifacts_zephyr rex
           copy_artifacts_zephyr skyrim
+          copy_artifacts_zephyr sanok "key.vbprik2;ec.config"
+
 
       - name: Archive tests binaries
         uses: actions/upload-artifact@v4
