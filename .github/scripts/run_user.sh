@@ -13,7 +13,7 @@ mkdir -p ~/chromiumos
 cd ~/chromiumos
 
 # Clone sources, pinned to a working SHA.
-repo init -b "dc3f359384c44a7463dd1e5c4d81ca5affac3073" -u https://chromium.googlesource.com/chromiumos/manifest.git
+repo init -b "c2b4b1de4e50aaae99207ef3f21a6baa38e36ec9" -u https://chromium.googlesource.com/chromiumos/manifest.git
 repo sync -j 4
 
 # Currently helipilot contains two smt32 specific tests (cortexm_fpu, stm32f_rtc)
@@ -41,25 +41,16 @@ cros_sdk -- bash -c "cd ../platform/ec; zmake -j 4 build rex skyrim"
 
 # Freeze revisions so that Sanok topic CLs will apply cleanly
 cd ~/chromiumos/src/platform/ec
-git fetch https://chromium.googlesource.com/chromiumos/platform/ec 62cd531c244a9c36e2a197bc1ae539414ec188e1 && git checkout FETCH_HEAD
+git fetch https://chromium.googlesource.com/chromiumos/platform/ec 035fdda8c0180c9953371070985704414430042b && git checkout FETCH_HEAD
 cd ~/chromiumos/src/third_party/zephyr/main
-git fetch https://chromium.googlesource.com/chromiumos/third_party/zephyr eec31b1bc0da7f5d3df4e1c71faf3721f7670d92 && git checkout FETCH_HEAD
+git fetch https://chromium.googlesource.com/chromiumos/third_party/zephyr ee9db7a2fa17c2a89542f64a2a54efafee9e842d && git checkout FETCH_HEAD
 
-# Cherry-pick necessary Sanok EC commits
+# Cherry-pick necessary Sanok EC commit
 cd ~/chromiumos/src/platform/ec
-git fetch https://chromium.googlesource.com/chromiumos/platform/ec refs/changes/60/6597060/34 && git cherry-pick FETCH_HEAD
-git fetch https://chromium.googlesource.com/chromiumos/platform/ec refs/changes/58/6597058/33 && git cherry-pick FETCH_HEAD
+git fetch https://chromium.googlesource.com/chromiumos/platform/ec refs/changes/60/6597060/57 && git cherry-pick FETCH_HEAD
 
-# Apply Sanok KConfig patch
+# Apply Sanok patch
 git apply ~/sanok_build.patch
-
-# Cherry-pick necessary Zephyr commits
-cd ~/chromiumos/src/third_party/zephyr/main
-git fetch https://chromium.googlesource.com/chromiumos/third_party/zephyr refs/changes/13/7086413/2 && git cherry-pick FETCH_HEAD
-git fetch https://chromium.googlesource.com/chromiumos/third_party/zephyr refs/changes/11/7086411/2 && git cherry-pick FETCH_HEAD
-git fetch https://chromium.googlesource.com/chromiumos/third_party/zephyr refs/changes/10/7086410/2 && git cherry-pick FETCH_HEAD
-git fetch https://chromium.googlesource.com/chromiumos/third_party/zephyr refs/changes/09/7086409/2 && git cherry-pick FETCH_HEAD
-git fetch https://chromium.googlesource.com/chromiumos/third_party/zephyr refs/changes/08/7086408/2 && git cherry-pick FETCH_HEAD
 
 # Clone Egis repos
 cd ~/chromiumos/src/third_party/zephyr

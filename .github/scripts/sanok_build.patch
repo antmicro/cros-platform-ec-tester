@@ -8,18 +8,5 @@ index 41c5ccb24b..b5d2ed03ce 100644
  		cros-ec,flash-controller = &flash_controller;
 -		cros-ec,sha = &crypto;
  	};
- 
+
  	soc {
-diff --git a/zephyr/program/fpmcu/sanok/prj.conf b/zephyr/program/fpmcu/sanok/prj.conf
-index 6ab40ef8ef..b5cbaa0489 100644
---- a/zephyr/program/fpmcu/sanok/prj.conf
-+++ b/zephyr/program/fpmcu/sanok/prj.conf
-@@ -94,8 +94,6 @@ CONFIG_FINGERPRINT_SENSOR_EGIS630_HEAP_SIZE=112640
- # To workaround problem with KERNEL_THREAD_SHELL_UNWIND
- CONFIG_KERNEL_SHELL=n
- 
--CONFIG_FP_SENSOR_ALLOW_EXTERNAL_CALI_DATA=y
--
- # The default value is assigned base on an offset within ec-ro node, not wp-ro which is an assumption in the code.
- CONFIG_PLATFORM_EC_RO_PUBKEY_STORAGE_OFF=261056
- CONFIG_CROS_EC_RO_MEM_OFF=0x1000
