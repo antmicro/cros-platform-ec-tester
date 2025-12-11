@@ -1,3 +1,15 @@
+diff --git a/zephyr/include/cros/egis/et171.dtsi b/zephyr/include/cros/egis/et171.dtsi
+index 41c5ccb24b..b5d2ed03ce 100644
+--- a/zephyr/include/cros/egis/et171.dtsi
++++ b/zephyr/include/cros/egis/et171.dtsi
+@@ -9,7 +9,6 @@
+ 	chosen {
+ 		cros-ec,watchdog = &wdt;
+ 		cros-ec,flash-controller = &flash_controller;
+-		cros-ec,sha = &crypto;
+ 	};
+ 
+ 	soc {
 diff --git a/zephyr/program/fpmcu/sanok/prj.conf b/zephyr/program/fpmcu/sanok/prj.conf
 index 6ab40ef8ef..b5cbaa0489 100644
 --- a/zephyr/program/fpmcu/sanok/prj.conf
@@ -11,4 +23,3 @@ index 6ab40ef8ef..b5cbaa0489 100644
  # The default value is assigned base on an offset within ec-ro node, not wp-ro which is an assumption in the code.
  CONFIG_PLATFORM_EC_RO_PUBKEY_STORAGE_OFF=261056
  CONFIG_CROS_EC_RO_MEM_OFF=0x1000
- 
