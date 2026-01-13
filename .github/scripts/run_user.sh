@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
-set -xeu
+set -x # print all commands to the terminal
+set -o errexit  # abort on nonzero exitstatus
+set -o nounset  # abort on unbound variable
+set -o pipefail # don't hide errors within pipes
 
 if [ "$#" -lt 5 ]; then
   echo "usage: $0 <cros_manifest_ref> <ec_rev> <zephyr_rev> <ec_changelist_rev> <depot_tools_rev>" >&2
