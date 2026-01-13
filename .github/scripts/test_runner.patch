@@ -1,0 +1,26 @@
+diff --git a/test/run_device_tests.py b/test/run_device_tests.py
+index 0c624ca97d..c4c4f1ce92 100755
+--- a/test/run_device_tests.py
++++ b/test/run_device_tests.py
+@@ -1795,6 +1795,12 @@ def main():
+         "--renode", help="Run tests with Renode emulator", action="store_true"
+     )
+
++    parser.add_argument(
++        "--exit_after_printing_tests",
++        help="Only print the tests for the board",
++        action="store_true",
++    )
++
+     args = parser.parse_args()
+     logging.basicConfig(
+         format="%(levelname)s:%(message)s", level=args.log_level
+@@ -1816,6 +1822,8 @@ def main():
+         platform, board_config, args.tests, args.with_private, args.zephyr
+     )
+     logging.debug("Running tests: %s", [test.config_name for test in test_list])
++    if args.exit_after_printing_tests:
++        return
+
+     with ThreadPoolExecutor(max_workers=1) as executor:
+         for test in test_list:
