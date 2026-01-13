@@ -1,52 +1,64 @@
 *** Variables ***
-${PLATFORM}                   %PLATFORM%
-${SCRIPT}                     ${CURDIR}/${PLATFORM}.resc
-${BIN_PATH}                   ${CURDIR}/${PLATFORM}
-${TESTS_PATH}                 ${BIN_PATH}/tests
-${TIMEOUT}                    %TIMEOUT%
-@{pattern}                    test-*.bin
-${MPU_FAILURE_MESSAGE}        Data access violation, mfar =
+${SCRIPT_PATH}                      ${CURDIR}/../../sanok.resc
+${BINS_PATH}                        ${CURDIR}/../test-bins
+${TIMEOUT}                          %TIMEOUT%
+${UART}                             sysbus.%UART%
 
 *** Keywords ***
-Create Machine
-    [Arguments]               ${test}
-    Execute Command           $bin=@${TESTS_PATH}/test-${test}.bin
-    Execute Command           $elf_ro=@${TESTS_PATH}/${test}.RO.elf
-    Execute Command           $elf_rw=@${TESTS_PATH}/${test}.RW.elf
-    Execute Script            ${SCRIPT}
-    Execute Command           logFile $ORIGIN/logs/%PLATFORM%-${test}.log
-    Create Terminal Tester    sysbus.%USART%  timeout=${TIMEOUT}  defaultPauseEmulation=True
+Create Machine With Bins From ${bin_path}
+    Execute Command                 $bin=@${bin_path}
+    Execute Command                 include @${SCRIPT_PATH}
 
-Wait For System Prompt
-    Wait For Line On Uart     MKBP not cleared within threshold
-    Wait For Line On Uart     MKBP: The AP is failing to respond because it is sleeping or off
-    Write Line To Uart
-    Wait For Prompt On Uart   >
+    Create Terminal Tester          ${UART}  timeout=0.1  defaultPauseEmulation=true
 
-Start To Prompt
-    [Arguments]               ${test}
-    Reset Emulation
-    ${test}=                  Get Substring  ${test}  5  -4
-    Create Machine            ${test}
-    Start Emulation
-    Wait For System Prompt
+Boot EC With Bins From ${bin_path}
+    Create Machine With Bins From ${bin_path}
 
-Run Test
-    [Arguments]               ${test}   ${argument}=${EMPTY}   ${message}=Pass!
-    Start To Prompt           ${test}
-    Write Line To Uart        runtest ${argument}
-    Wait For Line On Uart     ${message}
+    Wait For Line On Uart           ![Image: RO, sanok
+    Wait For Line On Uart           Jumping to image RW  timeout=2
+    Wait For Line On Uart           ![Image: RW, sanok  timeout=1
 
-Start In RO
-    [Arguments]               ${test}
-    Start To Prompt           ${test}
-    Write Line To Uart        reboot ro
-    Wait For System Prompt
+Run UART Command
+    [Arguments]                     ${command}
+    Wait For Prompt On Uart         fpmcu:~$
+    Write Line To Uart              ${command}
 
-Run Test In RO
-    [Arguments]               ${test}   ${argument}=${EMPTY}   ${message}=Pass!
-    Start In RO               ${test}
-    Write Line To Uart        runtest ${argument}
-    Wait For Line On Uart     ${message}
+Verify Test Binaries
+    [Arguments]                     ${test_bins}
+    ${bin_exists}=                  Run Keyword And Return Status  File Should Exist  ${test_bins}/ec.bin
+    ${rw_exists}=                   Run Keyword And Return Status  File Should Exist  ${test_bins}/zephyr.rw.elf
+    ${ro_exists}=                   Run Keyword And Return Status  File Should Exist  ${test_bins}/zephyr.ro.elf
+
+    ${missing}=                     Evaluate  ([name for name, exists in [('ec.bin', ${bin_exists}), ('zephyr.rw.elf', ${rw_exists}), ('zephyr.ro.elf', ${ro_exists})] if not exists])
+    IF  ${missing}
+        Skip                            Missing test bins: ${missing}
+    END
+
+Run Test Suite
+    [Arguments]                     ${test_bins}
+    ${bin_path}=                    Join Path  ${BINS_PATH}  ${test_bins}
+    Verify Test Binaries            ${bin_path}
+
+    Boot EC With Bins From ${bin_path}
+
+    # Check for ztest existence.
+    Register Failing Uart String    ztest: command not found
+
+    # Just for clarity.
+    Run UART Command                ztest list-testcases
+
+    Run UART Command                ztest run-all
+
+    # Ensure the test actually starts.
+    Wait For Line On Uart           Running TESTSUITE
+
+    # Fail immediately on test failure.
+    Register Failing Uart String    PROJECT EXECUTION FAILED
+    Register Failing Uart String    ZEPHYR FATAL ERROR
+    Register Failing Uart String    ASSERTION FAIL
+
+    Wait For Line On Uart           PROJECT EXECUTION SUCCESSFUL  timeout=30
 
 *** Test Cases ***
+Should Pass Test Suite
+    Run Test Suite                  %TEST_NAME%

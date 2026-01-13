@@ -4,6 +4,7 @@ logs/
 snapshots/
 artifacts/
 */tests/
+*/test-bins/
 bloonchipper.robot
 dartmonkey.robot
 helipilot.robot
