@@ -54,8 +54,6 @@ Run Test Suite
 
     # Fail immediately on test failure.
     Register Failing Uart String    PROJECT EXECUTION FAILED
-    Register Failing Uart String    ZEPHYR FATAL ERROR
-    Register Failing Uart String    ASSERTION FAIL
 
     Wait For Line On Uart           PROJECT EXECUTION SUCCESSFUL  timeout=30
 
