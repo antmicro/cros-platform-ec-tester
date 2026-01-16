@@ -8,5 +8,15 @@ index 41c5ccb24b..b5d2ed03ce 100644
  		cros-ec,flash-controller = &flash_controller;
 -		cros-ec,sha = &crypto;
  	};
-
+ 
  	soc {
+diff --git a/zephyr/program/fpmcu/et171/prj.conf b/zephyr/program/fpmcu/et171/prj.conf
+index 96c69fd681..aaf53c7cc2 100644
+--- a/zephyr/program/fpmcu/et171/prj.conf
++++ b/zephyr/program/fpmcu/et171/prj.conf
+@@ -85,3 +85,5 @@ CONFIG_LOG_PRINTK=n
+ CONFIG_PMP_NO_LOCK_GLOBAL=y
+ CONFIG_NULL_POINTER_EXCEPTION_DETECTION_PMP=y
+ CONFIG_HW_STACK_PROTECTION=y
++
++CONFIG_ASSERT=n
