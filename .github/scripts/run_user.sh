@@ -4,16 +4,15 @@ set -o errexit  # abort on nonzero exitstatus
 set -o nounset  # abort on unbound variable
 set -o pipefail # don't hide errors within pipes
 
-if [ "$#" -lt 5 ]; then
-  echo "usage: $0 <cros_manifest_ref> <ec_rev> <zephyr_rev> <ec_changelist_rev> <depot_tools_rev>" >&2
+if [ "$#" -lt 4 ]; then
+  echo "usage: $0 <cros_manifest_ref> <ec_rev> <zephyr_rev> <depot_tools_rev>" >&2
   exit 1
 fi
 
 cros_manifest_ref="$1"
 ec_rev="$2"
 zephyr_rev="$3"
-ec_changelist_rev="$4"
-depot_tools_rev="$5"
+depot_tools_rev="$4"
 
 # Setup git
 git config --global user.name "Antmicro"
@@ -45,11 +44,8 @@ git fetch https://chromium.googlesource.com/chromiumos/platform/ec "$ec_rev" && 
 cd ~/chromiumos/src/third_party/zephyr/main
 git fetch https://chromium.googlesource.com/chromiumos/third_party/zephyr "$zephyr_rev" && git checkout FETCH_HEAD
 
-# Cherry-pick necessary Sanok EC commit
-cd ~/chromiumos/src/platform/ec
-git fetch https://chromium.googlesource.com/chromiumos/platform/ec "$ec_changelist_rev" && git cherry-pick FETCH_HEAD
-
 # Apply Sanok patch
+cd ~/chromiumos/src/platform/ec
 git apply ~/sanok_build.patch
 # Apply test runner patch (so we can fetch the current test list easily)
 git apply ~/test_runner.patch

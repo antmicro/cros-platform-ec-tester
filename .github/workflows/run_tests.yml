@@ -15,9 +15,8 @@ jobs:
     env:
       IMG_FILE: debian-11-nocloud-amd64.qcow2
       CROS_MANIFEST_REF: stable
-      EC_REV: 628e6aae41e9e4d30e2c74bbcaf24d225ccd121c
-      ZEPHYR_REV: 4b05363d3f22682a96fb7ff0c91eefcd3ab56275
-      EC_CHANGELIST_REV: refs/changes/60/6597060/63
+      EC_REV: db718001a56a05e6468585169f34648fc6a1f0c0
+      ZEPHYR_REV: b077c2e494562c11c1164ede9e16343cefc37444
       DEPOT_TOOLS_REV: 7c837b993aba7a5efbd5ca6f00271f2df7d1e495
     steps:
       - name: Clone repository
@@ -36,7 +35,6 @@ jobs:
             -cos=${{ env.CROS_MANIFEST_REF }}\
             -ec=${{ env.EC_REV }}\
             -zephyr=${{ env.ZEPHYR_REV }}\
-            -cl=${{ env.EC_CHANGELIST_REV }}
 
       - if: ${{ steps.cache-build.outputs.cache-hit != 'true' }}
         name: Install dependencies
@@ -62,7 +60,6 @@ jobs:
             ${{ env.CROS_MANIFEST_REF }} \
             ${{ env.EC_REV }} \
             ${{ env.ZEPHYR_REV }} \
-            ${{ env.EC_CHANGELIST_REV }} \
             ${{ env.DEPOT_TOOLS_REV }}
 
       - if: ${{ steps.cache-build.outputs.cache-hit != 'true' }}

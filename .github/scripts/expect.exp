@@ -1,7 +1,7 @@
 #!/usr/bin/env -S expect -f
 
-if {$argc < 6} {
-    puts stderr "usage: $argv0 <img-file> <cros_manifest_ref> <ec_rev> <zephyr_rev> <ec_changelist_rev> <depot_tools_rev>"
+if {$argc < 5} {
+    puts stderr "usage: $argv0 <img-file> <cros_manifest_ref> <ec_rev> <zephyr_rev> <depot_tools_rev>"
     exit 1
 }
 
@@ -11,8 +11,7 @@ set IMG_FILE             [lindex $argv 0]
 set CROS_MANIFEST_REF    [lindex $argv 1]
 set EC_REV               [lindex $argv 2]
 set ZEPHYR_REV           [lindex $argv 3]
-set EC_CHANGELIST_REV    [lindex $argv 4]
-set DEPOT_TOOLS_REV      [lindex $argv 5]
+set DEPOT_TOOLS_REV      [lindex $argv 4]
 
 spawn kvm -m 24576 -smp 6 -hda $IMG_FILE -net nic -net user -nographic
 
@@ -24,7 +23,6 @@ send "./run_admin.sh \
 \"$CROS_MANIFEST_REF\" \
 \"$EC_REV\" \
 \"$ZEPHYR_REV\" \
-\"$EC_CHANGELIST_REV\" \
 \"$DEPOT_TOOLS_REV\"\n"
 
 expect eof
