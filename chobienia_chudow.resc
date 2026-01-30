@@ -1,0 +1,31 @@
+$name?="chobienia_chudow"
+$bin?=@bin
+$repl?=@platforms/cpus/focaltech_ft9001.repl
+
+using sysbus
+mach create $name
+
+machine LoadPlatformDescription $repl
+machine LoadPlatformDescriptionFromString "romfuncs: Memory.MappedMemory @ sysbus 0x04006000 { size: 0x2000 }"
+showAnalyzer usart2
+
+set mock_rom_func
+"""
+self.Log(LogLevel.Debug, "mocking ROM function")
+cpu.PC = cpu.LR  # Return immediately
+"""
+
+macro reset
+"""
+    # ROM functions
+    cpu0 AddHook 0x4007658 $mock_rom_func  # `xip_sys_clk_switch`
+    cpu0 AddHook 0x400665C $mock_rom_func  # `ssi_close_xip`
+
+    cpu0 FpuEnabled true
+    sysbus LoadBinary $bin/ec.bin 0x10080000
+    sysbus LoadSymbolsFrom $bin/zephyr.ro.elf
+    sysbus LoadSymbolsFrom $bin/zephyr.rw.elf
+    cpu0 VectorTableOffset 0x10081000  # Vector table of RO image
+"""
+
+runMacro $reset
