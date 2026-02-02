@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -x # print all commands to the terminal
+set -x          # print all commands to the terminal
 set -o errexit  # abort on nonzero exitstatus
 set -o nounset  # abort on unbound variable
 set -o pipefail # don't hide errors within pipes
@@ -41,8 +41,8 @@ repo sync --fail-fast --local-only --jobs $(nproc)
 # Freeze revisions so that Sanok topic CLs will apply cleanly
 cd ~/chromiumos/src/platform/ec
 git fetch https://chromium.googlesource.com/chromiumos/platform/ec "$ec_rev" && git checkout FETCH_HEAD
-cd ~/chromiumos/src/third_party/zephyr/main
-git fetch https://chromium.googlesource.com/chromiumos/third_party/zephyr "$zephyr_rev" && git checkout FETCH_HEAD
+cd ~/chromiumos/src/third_party/zephyrproject
+git fetch https://chromium.googlesource.com/chromiumos/third_party/zephyrproject "$zephyr_rev" && git checkout FETCH_HEAD
 
 # Apply Sanok patch
 cd ~/chromiumos/src/platform/ec

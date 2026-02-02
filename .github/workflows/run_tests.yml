@@ -15,8 +15,8 @@ jobs:
     env:
       IMG_FILE: debian-11-nocloud-amd64.qcow2
       CROS_MANIFEST_REF: stable
-      EC_REV: db718001a56a05e6468585169f34648fc6a1f0c0
-      ZEPHYR_REV: b077c2e494562c11c1164ede9e16343cefc37444
+      EC_REV: c2f25a8eb75811932d9c89a9101ab7372de477fb
+      ZEPHYR_REV: 0597ef1f2f8274e28f6843e4482529d8f10e8f39
       DEPOT_TOOLS_REV: 7c837b993aba7a5efbd5ca6f00271f2df7d1e495
     steps:
       - name: Clone repository
