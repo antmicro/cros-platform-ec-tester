@@ -11,12 +11,12 @@ index 41c5ccb24b..b5d2ed03ce 100644
  
  	soc {
 diff --git a/zephyr/program/fpmcu/et171/prj.conf b/zephyr/program/fpmcu/et171/prj.conf
-index 96c69fd681..07e2d2e090 100644
+index dbe0e97671..a7cff1ab13 100644
 --- a/zephyr/program/fpmcu/et171/prj.conf
 +++ b/zephyr/program/fpmcu/et171/prj.conf
-@@ -85,3 +85,5 @@ CONFIG_LOG_PRINTK=n
- CONFIG_PMP_NO_LOCK_GLOBAL=y
- CONFIG_NULL_POINTER_EXCEPTION_DETECTION_PMP=y
- CONFIG_HW_STACK_PROTECTION=y
-+
+@@ -1,3 +1,5 @@
 +CONFIG_PLATFORM_EC_DEBUG_ASSERT=n
++
+ # Copyright 2025 The ChromiumOS Authors
+ # Use of this source code is governed by a BSD-style license that can be
+ # found in the LICENSE file.
