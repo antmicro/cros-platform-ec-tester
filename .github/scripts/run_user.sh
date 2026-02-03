@@ -44,6 +44,11 @@ git fetch https://chromium.googlesource.com/chromiumos/platform/ec "$ec_rev" && 
 cd ~/chromiumos/src/third_party/zephyrproject
 git fetch https://chromium.googlesource.com/chromiumos/third_party/zephyrproject "$zephyr_rev" && git checkout FETCH_HEAD
 
+# Install Egis module/HAL
+cd ~/chromiumos/src/third_party/zephyrproject/modules
+git clone https://github.com/EgisMCU/egis_module.git
+git clone https://github.com/EgisMCU/hal_egis.git
+
 # Apply Sanok patch
 cd ~/chromiumos/src/platform/ec
 git apply ~/sanok_build.patch
