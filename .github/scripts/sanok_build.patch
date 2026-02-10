@@ -1,15 +1,3 @@
-diff --git a/zephyr/include/cros/egis/et171.dtsi b/zephyr/include/cros/egis/et171.dtsi
-index 41c5ccb24b..b5d2ed03ce 100644
---- a/zephyr/include/cros/egis/et171.dtsi
-+++ b/zephyr/include/cros/egis/et171.dtsi
-@@ -9,7 +9,6 @@
- 	chosen {
- 		cros-ec,watchdog = &wdt;
- 		cros-ec,flash-controller = &flash_controller;
--		cros-ec,sha = &crypto;
- 	};
- 
- 	soc {
 diff --git a/zephyr/program/fpmcu/et171/prj.conf b/zephyr/program/fpmcu/et171/prj.conf
 index dbe0e97671..a7cff1ab13 100644
 --- a/zephyr/program/fpmcu/et171/prj.conf

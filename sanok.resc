@@ -21,3 +21,6 @@ macro reset
 """
 
 runMacro $reset
+
+include $ORIGIN/sanok.py
+AddCustomPythonHooks cpu0
